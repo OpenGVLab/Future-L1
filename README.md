@@ -1,4 +1,4 @@
-<h1 align="center">Imagine Before You Predict</h1>
+<h1 align="center">💭 Imagine Before You Predict</h1>
 <h3 align="center">Interleaved Latent Visual Reasoning for Video Event Prediction</h3>
 
 <p align="center">
