@@ -50,7 +50,7 @@
 </table>
 </p>
 
-<p align="center">
+<!-- <p align="center">
 <table align="center" width="72%">
 <caption align="center"><b>Table 1. Main results on FutureBench.</b> Accuracy (%); best results are in <b>bold</b>.</caption>
 <thead>
@@ -110,7 +110,7 @@
 </td>
 </tr>
 </table>
-</p>
+</p> -->
 
 ---
 
