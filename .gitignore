@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+RL_v2/wandb/
+logs/
+ckpt/
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+*.egg-info/
+dist/
+build/

@@ -1,0 +1,216 @@
+# FutureL1 RL default config, aligned with
+# `HyLar/RL/examples/config_hylar.yaml` (HyLar reference checkpoint for DePO).
+# Field renames vs. HyLar (because the underlying base is EasyR1, not HyLar):
+#   filter_overlong_and_invalid_prompts -> filter_overlong_prompts
+#   ulysses_sequence_parallel_size      -> ulysses_size
+# Everything else uses the HyLar field names + default values.
+# Switch GRPO/DAPO/DePO via `train.sh grpo|dapo|depo` (overrides below at runtime).
+data:
+  train_files: ""                # set on command line
+  val_files: ""                  # set on command line
+  prompt_key: problem
+  answer_key: answer
+  image_key: images
+  video_key: videos
+  image_dir: null
+  video_fps: 2.0
+  max_video_frames: 16
+  max_prompt_length: 8192
+  max_response_length: 2048
+  rollout_batch_size: 64         # equivalent to verl's data.train_batch_size
+  mini_rollout_batch_size: 64    # equivalent to verl's data.gen_batch_size
+  val_batch_size: 512
+  format_prompt: ./examples/format_prompt/future_l1_format.jinja
+  override_chat_template: null
+  shuffle: true
+  seed: 30
+  # Legacy shared pixel limits used as fallback by older overrides.
+  min_pixels: 262144             # 512 * 512
+  max_pixels: 4194304            # 2048 * 2048
+  # OneThinker/EasyR1-aligned split visual limits:
+  # TwiFF is materialized as images, so it follows image_*.
+  image_min_pixels: 262144       # 512 * 512
+  image_max_pixels: 4194304      # 2048 * 2048
+  video_min_pixels: 4096         # 4 * 32 * 32
+  video_max_pixels: 65536        # 64 * 32 * 32
+  # FutureL1 system prompt is injected automatically; TwiFF JSON shards
+  # trigger video decode at every filter call, so default it off (matches
+  # the upstream future_l1_rl behaviour). HyLar config has it on.
+  filter_overlong_prompts: false
+  filter_overlong_prompts_workers: 16
+  train_max_samples: 54784       # -1 for all data
+  val_max_samples: 4096          # -1 for all data
+
+algorithm:
+  adv_estimator: dapo
+  # Standard PPO KL penalty control
+  disable_kl: false
+  use_kl_loss: true
+  kl_penalty: low_var_kl
+  kl_coef: 1.0e-2
+  # Online filtering parameters
+  online_filtering: true
+  filter_key: accuracy
+  filter_low: 0.1
+  filter_high: 0.9
+  answer_tag_filtering: true     # drop groups missing or duplicating <answer> tags
+  loss_avg_mode: token           # 'token' or 'seq'
+  # Decoupled Hybrid PPO: separate token and latent PPO losses
+  enable_decoupled_hybrid_ppo: true
+  latent_clip_ratio_low: 0.05    # lower clip bound for latent tokens
+  latent_clip_ratio_high: 0.05   # upper clip bound for latent tokens
+  latent_clip_ratio_dual: 3.0    # dual-clip constant for latent tokens
+  latent_loss_alpha: 0.5         # L_total = L^tok + alpha * L^lat
+  # Closed-form vMF KL constraint on latent distribution drift
+  enable_latent_vmf_kl: false
+  latent_kl_coef: 1.0e-3
+  # Temporal-Feature DePO: mean-pool each frame span, keep the first frame
+  # absolute, then optimise pooled frame-to-frame deltas. Off for baseline DePO.
+  enable_temporal_feature_depo: false
+  # TO-DePO: contrast normal latent frame order against a shuffled order.
+  enable_temporal_order_contrast: false
+  temporal_order_contrast_coef: 0.05
+  temporal_order_contrast_margin: 0.1
+  # Format-gated latent loss: malformed samples keep token PPO / format reward,
+  # but their latent PPO, latent vMF KL, and TO-DePO losses are zeroed.
+  enable_format_gated_latent_loss: false
+  format_gate_threshold: 1.0
+  # LDPO latent overuse control: penalize ratios above the target.
+  enable_latent_usefulness_reward: false
+  latent_overuse_target_ratio: 0.08
+  latent_overuse_penalty_coef: 1.0
+  # CAVA: Causal Advantage for Visual-latents. The latent advantage is the
+  # rollout reward minus a same-prompt text-only counterfactual baseline.
+  enable_cava_latent_advantage: false
+  cava_baseline: text_only_group
+  cava_text_only_ratio_threshold: 0.0
+  cava_delta_clip: 1.0
+  cava_format_gate: true
+  cava_format_fail_penalty: 1.0
+  cava_forced_text_baseline_n: 0  # >0 adds pure-text CAVA baselines outside rollout.n
+
+worker:
+  actor:
+    global_batch_size: 64
+    micro_batch_size_per_device_for_update: 2
+    micro_batch_size_per_device_for_experience: 32
+    disable_tqdm: true
+    max_grad_norm: 1.0
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    clip_ratio_dual: 3.0
+    loss_avg_mode: token
+    loss_type: default
+    padding_free: true
+    ulysses_size: 1              # HyLar name: ulysses_sequence_parallel_size
+    use_torch_compile: false
+    future_l1_rl_kappa: 0.01      # HyLar name: hylar_rl_kappa
+    model:
+      model_path: ""             # set on command line
+      enable_gradient_checkpointing: true
+      trust_remote_code: true    # FutureL1's projection head requires this for some HF stacks
+      freeze_vision_tower: false
+      lora:
+        rank: 0
+        alpha: 64
+        target_modules: all-linear
+        exclude_modules: .*visual.*
+    optim:
+      lr: 1.0e-6
+      weight_decay: 1.0e-2
+      strategy: adamw_bf16       # {adamw, adamw_bf16}
+      lr_warmup_ratio: 0.0
+    fsdp:
+      enable_full_shard: true
+      enable_cpu_offload: false
+      enable_rank0_init: true
+      torch_dtype: bf16
+    offload:
+      offload_params: false      # 140 GB VRAM: keep weights resident to eliminate CPU-GPU IO in old/ref phases
+      offload_optimizer: false   # optimizer states (~28 GB) also resident; saves ~50-60 s/step on old phase
+
+  critic:
+    disable_tqdm: true
+
+  rollout:
+    n: 8
+    temperature: 0.9
+    top_p: 0.99
+    disable_tqdm: true
+    max_num_seqs: 256
+    gpu_memory_utilization: 0.75
+    enforce_eager: true
+    enable_chunked_prefill: false
+    tensor_parallel_size: 1
+    limit_images: 4              # vLLM rejects prompts with images if this is 0
+    # Default is `future_l1_depo` so that GRPO / DAPO / DePO are *baseline-
+    # equivalent to HyLar* out of the box: latent-aware vLLM rollout + per-step
+    # latent recording + vMF log-prob substitution in the actor are always on.
+    # The DePO-specific algorithm features (decoupled-PPO, vMF KL, CAVA, ...)
+    # remain gated by their own `algorithm.enable_*` flags, so GRPO/DAPO with
+    # those flags off are identical to HyLar's GRPO/DAPO baselines, while DePO
+    # turns the relevant flags on. `future_l1_text` and `default` are kept as
+    # ablation-only options and are NOT HyLar-equivalent.
+    sampling_strategy: future_l1_depo  # default | future_l1_text | future_l1_depo
+    repetition_penalty: 1.0
+    val_override_config:
+      temperature: 0
+      n: 1
+
+  ref:
+    fsdp:
+      enable_full_shard: true
+      enable_cpu_offload: true
+      enable_rank0_init: true
+    offload:
+      offload_params: false
+
+  reward:
+    # RewardConfig has no `reward_type` field: the module-level
+    # `REWARD_TYPE = "batch"` attribute drives the manager.
+    reward_function: ./examples/reward_function/future_l1_reward_function.py:compute_score
+    skip_special_tokens: false   # FutureL1 wants <|latent_*|> / <reason> visible
+    reward_function_kwargs:
+      format_weight: 0.1
+      length_penalty_weight: 0.001
+      latent_div_lambda: 0.0
+      latent_ctr_lambda: 0.0
+      latent_ctr_temperature: 0.5
+
+  # HyLar's `rule_based_judge` block has no corresponding worker in RL_v2 -
+  # the LLM judge is invoked from inside the reward function and configured
+  # via environment variables (see train.sh):
+  #   USE_LLM_JUDGE=1               # turn the rule-then-LLM fallback on
+  #   LLM_JUDGE_ONLY=1              # skip rule check, pure LLM
+  #   JUDGE_API_URL                 # OpenAI-compatible base URL
+  #   JUDGE_API_NAME                # model name
+  #   JUDGE_API_KEY                 # API key
+  #   API_JUDGE_WORKERS=32          # max parallel workers
+
+trainer:
+  total_epochs: 1
+  max_steps: null
+  project_name: FutureL1_RL
+  experiment_name: FutureL1_RL_Training
+  logger: ["console", "wandb"]
+  nnodes: 1
+  n_gpus_per_node: 8
+  # Skip all in-training validation (initial + periodic + inline FutureBench).
+  # Default: no reward-based val; FutureBench runs once post-train on the final
+  # checkpoint (see train.sh: FUTUREBENCH_EVAL_DURING_TRAIN=0, POST_TRAIN_EVAL_LAST_ONLY=1).
+  # To re-enable mid-training reward val: val_freq > 0 + data.val_files.
+  # To re-enable inline FutureBench every N steps: FUTUREBENCH_EVAL_DURING_TRAIN=1.
+  val_freq: -1
+  val_before_train: false
+  futurebench_eval_freq: -1
+  futurebench_eval_script: null
+  val_only: false
+  val_generations_to_log: 0
+  save_freq: 50
+  save_limit: 1
+  save_checkpoint_path: null
+  load_checkpoint_path: null
+  save_samples: true
+  samples_save_dir: ./rollout_samples
+  samples_save_interval: 100
+  max_try_make_batch: 20

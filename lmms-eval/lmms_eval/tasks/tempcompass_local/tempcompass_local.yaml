@@ -1,0 +1,6 @@
+group: tempcompass_local
+task:
+  - tempcompass_multi_choice_local
+  - tempcompass_yes_no_local
+  - tempcompass_caption_matching_local
+  - tempcompass_captioning_local

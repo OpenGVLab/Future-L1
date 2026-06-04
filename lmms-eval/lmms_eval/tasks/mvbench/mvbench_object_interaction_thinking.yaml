@@ -1,0 +1,9 @@
+include: _reasoning_template_yaml
+task: mvbench_object_interaction_thinking
+dataset_name: object_interaction
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: object_interaction
+    pre_prompt: "You FIRST think about the reasoning process as an internal monologue and then provide the final answer.\nThe reasoning process MUST BE enclosed within <reason> </reason> tags. After all thinking is complete, place the final answer inside `<answer>option's letter from the given choices</answer>`"
+    post_prompt: ""

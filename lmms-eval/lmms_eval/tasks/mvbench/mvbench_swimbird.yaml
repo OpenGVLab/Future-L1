@@ -1,0 +1,22 @@
+group: mvbench_swimbird
+task:
+  - mvbench_action_sequence_future_l1
+  - mvbench_moving_count_future_l1
+  - mvbench_action_prediction_future_l1
+  - mvbench_episodic_reasoning_future_l1
+  - mvbench_action_antonym_future_l1
+  - mvbench_action_count_future_l1
+  - mvbench_scene_transition_future_l1
+  - mvbench_object_shuffle_future_l1
+  - mvbench_object_existence_future_l1
+  - mvbench_fine_grained_pose_future_l1
+  - mvbench_unexpected_action_future_l1
+  - mvbench_moving_direction_future_l1
+  - mvbench_state_change_future_l1
+  - mvbench_object_interaction_future_l1
+  - mvbench_character_order_future_l1
+  - mvbench_action_localization_future_l1
+  - mvbench_counterfactual_inference_future_l1
+  - mvbench_fine_grained_action_future_l1
+  - mvbench_moving_attribute_future_l1
+  - mvbench_egocentric_navigation_future_l1

@@ -1,0 +1,31 @@
+# Offline-only MVBench: Arrow tables via datasets.load_from_disk (no HF Hub at eval time).
+# One-time export: lmms_eval/tools/prepare_mvbench_tempcompass_offline.py mvbench ...
+#
+# Required env:
+#   LMMS_EVAL_MVBENCH_DATASET_DIR   — directory containing per-subset folders (see export script)
+# Optional:
+#   LMMS_EVAL_MVBENCH_VIDEO_ROOT    — root containing unpacked MVBench videos (same layout as HF cache:
+#                                     <root>/<DATA_LIST subdir>/<relative video path>)
+#                                     If unset, defaults to $HF_HOME/mvbench_video
+
+dataset_kwargs:
+  load_from_disk: true
+
+output_type: generate_until
+doc_to_visual: !function utils.mvbench_doc_to_visual
+doc_to_text: !function utils.mvbench_doc_to_text
+doc_to_target: "answer"
+
+generation_kwargs:
+  max_new_tokens: 16
+  temperature: 0
+  top_p: 1.0
+  num_beams: 1
+  do_sample: false
+
+process_results: !function utils.mvbench_process_results
+
+metric_list:
+  - metric: mvbench_accuracy
+    aggregation: !function utils.mvbench_aggregate_results
+    higher_is_better: true

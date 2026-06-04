@@ -1,0 +1,37 @@
+dataset_path: /path/to/your/data/VideoL1-Bench/SEED-Bench-R1/SEED-Bench-R1-L2
+dataset_kwargs:
+  load_from_disk: True
+  cache_dir: /path/to/your/data/VideoL1-Bench/SEED-Bench-R1/videos
+  # video: True
+  # From_YouTube: True
+task: seedbench_r1_l2_sb
+test_split: test
+output_type: generate_until
+doc_to_visual: !function utils.seedbench_r1_doc_to_visual
+doc_to_text: !function utils.seedbench_r1_doc_to_text
+doc_to_target: !function utils.seedbench_r1_doc_to_target
+
+
+## reasoning
+generation_kwargs:
+  max_new_tokens: 2048
+  temperature: 0
+  top_p: 1
+  do_sample: false
+  
+process_results: !function utils.seedbench_r1_process_reasoning_results
+
+lmms_eval_specific_kwargs:
+  default:
+    pre_prompt: ""
+    post_prompt: "Please provide only the single option letter within the <answer> </answer> tags."
+
+
+metric_list:
+  - metric: seedbench_r1_acc
+    aggregation: !function utils.seedbench_r1_aggregate_results
+    higher_is_better: true
+
+
+metadata:
+  - version: 0.0

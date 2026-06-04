@@ -1,0 +1,9 @@
+include: _default_template_yaml_local
+dataset_path: $LMMS_EVAL_MVBENCH_DATASET_DIR/egocentric_navigation
+task: mvbench_egocentric_navigation_local
+dataset_name: egocentric_navigation
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: egocentric_navigation
+    post_prompt: "Only give the best option.\n"

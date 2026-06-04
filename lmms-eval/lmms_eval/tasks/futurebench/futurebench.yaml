@@ -1,0 +1,62 @@
+dataset_path: /path/to/your/data/VideoL1-Bench/FutureBench
+dataset_kwargs:
+  load_from_disk: True
+  cache_dir: /path/to/your/data/V1-33K/first_segment_video
+  # video: True
+  # token: True # Auxiliary arguments that `datasets.load_dataset` accepts. This can be used to specify arguments such as `data_files` or `data_dir` if you want to use local datafiles such as json or csv.
+  
+  
+task: futurebench # The name of the task, this should be registered in the task manager. If successful, you can call lmms_eval with this task name by setting `--tasks mme`.
+test_split: test # The split of the dataset to use as the test split.
+output_type: generate_until # The type of model output for the given task. Options are `generate_until`, `loglikelihood`, and `multiple_choice`.
+doc_to_visual: !function utils.future_pred_doc_to_visual # The function to process a sample into the appropriate input for the model. 
+doc_to_text: !function utils.future_pred_doc_to_text # The function to process a sample into the appropriate target output for the model.
+doc_to_target: !function utils.future_pred_doc_to_target # The function to process a sample into a list of possible string choices for `multiple_choice` tasks.
+
+## direct answer
+generation_kwargs: 
+  max_new_tokens: 16
+  temperature: 0
+  top_p: 1.0
+  num_beams: 1
+  do_sample: false
+  
+process_results: !function utils.future_pred_process_results
+
+lmms_eval_specific_kwargs:
+  default:
+    pre_prompt: ""
+    post_prompt: "\nAnswer with the option's letter from the given choices directly." 
+
+
+### reasoning
+# generation_kwargs: 
+#   max_new_tokens: 2048
+  
+# process_results: !function utils.future_pred_process_reasoning_results
+
+# lmms_eval_specific_kwargs:
+#   default:
+#     pre_prompt: "You FIRST think about the reasoning process as an internal monologue and then provide the final answer.\nThe reasoning process MUST BE enclosed within <think> </think> tags. The final answer MUST BE put in <answer> </answer> tags."
+#     post_prompt: ""
+
+
+metric_list:
+  - metric: future_acc
+    aggregation: !function utils.future_pred_aggregate_results
+    higher_is_better: true
+  - metric: hop1_acc
+    aggregation: !function utils.future_pred_aggregate_hop1
+    higher_is_better: true
+  - metric: hop2_acc
+    aggregation: !function utils.future_pred_aggregate_hop2
+    higher_is_better: true
+  - metric: hop3_acc
+    aggregation: !function utils.future_pred_aggregate_hop3
+    higher_is_better: true
+  - metric: hop5_acc
+    aggregation: !function utils.future_pred_aggregate_hop5
+    higher_is_better: true
+
+metadata:
+  - version: 0.0

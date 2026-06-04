@@ -1,0 +1,5 @@
+group: seedbench_r1_oe
+task:
+  - seedbench_r1_l1_oe
+  - seedbench_r1_l2_oe
+  - seedbench_r1_l3_oe

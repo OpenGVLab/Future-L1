@@ -1,0 +1,9 @@
+include: _default_template_yaml_local
+dataset_path: $LMMS_EVAL_MVBENCH_DATASET_DIR/unexpected_action
+task: mvbench_unexpected_action_local
+dataset_name: unexpected_action
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: unexpected_action
+    post_prompt: "Only give the best option.\n"

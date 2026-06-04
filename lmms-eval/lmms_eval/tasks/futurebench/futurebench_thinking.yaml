@@ -1,0 +1,44 @@
+dataset_path: /path/to/your/data/VideoL1-Bench/FutureBench
+dataset_kwargs:
+  load_from_disk: True
+  cache_dir: /path/to/your/data/V1-33K/first_part_video/
+
+task: futurebench_thinking
+test_split: test
+output_type: generate_until
+doc_to_visual: !function utils.future_pred_doc_to_visual
+doc_to_text: !function utils.future_pred_doc_to_text
+doc_to_target: !function utils.future_pred_doc_to_target
+
+generation_kwargs:
+  max_new_tokens: 2048
+  temperature: 0
+  top_p: 1
+  do_sample: false
+  
+process_results: !function utils.future_pred_process_reasoning_results
+
+lmms_eval_specific_kwargs:
+  default:
+    pre_prompt: "You FIRST think about the reasoning process as an internal monologue and then provide the final answer.\nThe reasoning process MUST BE enclosed within <reason> </reason> tags. After all thinking is complete, place the final answer inside `<answer>option's letter from the given choices</answer>`"
+    post_prompt: ""
+
+metric_list:
+  - metric: future_acc
+    aggregation: !function utils.future_pred_aggregate_results
+    higher_is_better: true
+  - metric: hop1_acc
+    aggregation: !function utils.future_pred_aggregate_hop1
+    higher_is_better: true
+  - metric: hop2_acc
+    aggregation: !function utils.future_pred_aggregate_hop2
+    higher_is_better: true
+  - metric: hop3_acc
+    aggregation: !function utils.future_pred_aggregate_hop3
+    higher_is_better: true
+  - metric: hop5_acc
+    aggregation: !function utils.future_pred_aggregate_hop5
+    higher_is_better: true
+
+metadata:
+  - version: 0.0

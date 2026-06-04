@@ -1,0 +1,9 @@
+include: _reasoning_template_yaml
+task: mvbench_egocentric_navigation_future_l1
+dataset_name: egocentric_navigation
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: egocentric_navigation
+    pre_prompt: ""
+    post_prompt: ""

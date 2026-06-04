@@ -1,0 +1,9 @@
+include: _default_template_yaml_local
+dataset_path: $LMMS_EVAL_MVBENCH_DATASET_DIR/action_antonym
+task: mvbench_action_antonym_local
+dataset_name: action_antonym
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: action_antonym
+    post_prompt: "Only give the best option.\n"

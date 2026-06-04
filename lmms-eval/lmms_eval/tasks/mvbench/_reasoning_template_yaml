@@ -1,0 +1,23 @@
+dataset_path: /mnt/shared-storage-user/video-shared/datas/MVBench
+dataset_kwargs:
+  token: True
+  cache_dir: /mnt/shared-storage-user/video-shared/datas/MVBench/video
+  video: True
+  revision: video
+  create_link: True
+generation_kwargs:
+  max_new_tokens: 2048
+  temperature: 0
+  top_p: 1.0
+  num_beams: 1
+  do_sample: false
+
+output_type: generate_until
+doc_to_visual: !function utils.mvbench_doc_to_visual
+doc_to_text: !function utils.mvbench_doc_to_text
+doc_to_target: "answer"
+process_results: !function utils.mvbench_process_reasoning_results
+metric_list:
+  - metric: mvbench_accuracy
+    aggregation: !function utils.mvbench_aggregate_results
+    higher_is_better: true

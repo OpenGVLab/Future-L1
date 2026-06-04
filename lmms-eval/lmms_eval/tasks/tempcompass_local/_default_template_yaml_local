@@ -1,0 +1,24 @@
+# Offline TempCompass (metadata via load_from_disk). Videos: directory of .mp4 files.
+#
+#   LMMS_EVAL_TEMPCOMPASS_DATASET_DIR — root with subfolders multi-choice, yes_no, ...
+#   LMMS_EVAL_TEMPCOMPASS_VIDEO_ROOT — folder containing all TempCompass *.mp4 (same as .../tempcompass/videos)
+
+dataset_kwargs:
+  load_from_disk: true
+
+generation_kwargs:
+  max_new_tokens: 16
+  temperature: 0
+  top_p: 1.0
+  num_beams: 1
+  do_sample: false
+
+lmms_eval_specific_kwargs:
+  default:
+    pre_prompt: ""
+    post_prompt: {
+      "multi-choice": "\nPlease directly give the best option:",
+      "yes_no": "\nPlease answer yes or no:",
+      "caption_matching": "\nPlease directly give the best option:",
+      "captioning": ""
+    }

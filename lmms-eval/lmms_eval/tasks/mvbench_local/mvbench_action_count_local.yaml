@@ -1,0 +1,9 @@
+include: _default_template_yaml_local
+dataset_path: $LMMS_EVAL_MVBENCH_DATASET_DIR/action_count
+task: mvbench_action_count_local
+dataset_name: action_count
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: action_count
+    post_prompt: "Only give the best option.\n"

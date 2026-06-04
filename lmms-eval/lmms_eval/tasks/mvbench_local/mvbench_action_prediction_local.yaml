@@ -1,0 +1,9 @@
+include: _default_template_yaml_local
+dataset_path: $LMMS_EVAL_MVBENCH_DATASET_DIR/action_prediction
+task: mvbench_action_prediction_local
+dataset_name: action_prediction
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: action_prediction
+    post_prompt: "Only give the best option.\n"

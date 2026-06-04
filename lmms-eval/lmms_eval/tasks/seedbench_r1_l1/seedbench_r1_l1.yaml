@@ -1,0 +1,49 @@
+dataset_path: /path/to/your/data/VideoL1-Bench/SEED-Bench-R1/SEED-Bench-R1-L1
+dataset_kwargs:
+  load_from_disk: True
+  cache_dir: /path/to/your/data/VideoL1-Bench/SEED-Bench-R1/videos
+  # video: True
+  # From_YouTube: True
+task: seedbench_r1_l1
+test_split: test
+output_type: generate_until
+doc_to_visual: !function utils.seedbench_r1_doc_to_visual
+doc_to_text: !function utils.seedbench_r1_doc_to_text
+doc_to_target: !function utils.seedbench_r1_doc_to_target
+
+
+### direct answer
+generation_kwargs:
+  max_new_tokens: 16
+  temperature: 0
+  top_p: 1.0
+  num_beams: 1
+  do_sample: false
+
+process_results: !function utils.seedbench_r1_process_results
+
+lmms_eval_specific_kwargs:
+  default:
+    pre_prompt: ""
+    post_prompt: "\nAnswer with the option's letter from the given choices directly."
+
+
+### reasoning
+# generation_kwargs:
+#   max_new_tokens: 2048
+
+# process_results: !function utils.seedbench_r1_process_reasoning_results
+
+# lmms_eval_specific_kwargs:
+#   default:
+#     pre_prompt: "You FIRST think about the reasoning process as an internal monologue and then provide the final answer.\nThe reasoning process MUST BE enclosed within <think> </think> tags. The final answer MUST BE put in <answer> </answer> tags."
+#     post_prompt: ""
+
+
+metric_list:
+  - metric: seedbench_r1_acc
+    aggregation: !function utils.seedbench_r1_aggregate_results
+    higher_is_better: true
+
+metadata:
+  - version: 0.0

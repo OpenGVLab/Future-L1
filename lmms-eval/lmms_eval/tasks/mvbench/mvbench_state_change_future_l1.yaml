@@ -1,0 +1,9 @@
+include: _reasoning_template_yaml
+task: mvbench_state_change_future_l1
+dataset_name: state_change
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: state_change
+    pre_prompt: ""
+    post_prompt: ""

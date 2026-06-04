@@ -1,0 +1,22 @@
+group: mvbench_thinking
+task:
+  - mvbench_action_sequence_thinking
+  - mvbench_moving_count_thinking
+  - mvbench_action_prediction_thinking
+  - mvbench_episodic_reasoning_thinking
+  - mvbench_action_antonym_thinking
+  - mvbench_action_count_thinking
+  - mvbench_scene_transition_thinking
+  - mvbench_object_shuffle_thinking
+  - mvbench_object_existence_thinking
+  - mvbench_fine_grained_pose_thinking
+  - mvbench_unexpected_action_thinking
+  - mvbench_moving_direction_thinking
+  - mvbench_state_change_thinking
+  - mvbench_object_interaction_thinking
+  - mvbench_character_order_thinking
+  - mvbench_action_localization_thinking
+  - mvbench_counterfactual_inference_thinking
+  - mvbench_fine_grained_action_thinking
+  - mvbench_moving_attribute_thinking
+  - mvbench_egocentric_navigation_thinking

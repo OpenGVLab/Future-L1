@@ -1,0 +1,9 @@
+include: _reasoning_template_yaml
+task: mvbench_episodic_reasoning_future_l1
+dataset_name: episodic_reasoning
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: episodic_reasoning
+    pre_prompt: ""
+    post_prompt: ""

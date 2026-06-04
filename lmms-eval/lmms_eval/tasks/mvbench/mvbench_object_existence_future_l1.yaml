@@ -1,0 +1,9 @@
+include: _reasoning_template_yaml
+task: mvbench_object_existence_future_l1
+dataset_name: object_existence
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: object_existence
+    pre_prompt: ""
+    post_prompt: ""

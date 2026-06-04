@@ -1,0 +1,9 @@
+include: _reasoning_template_yaml
+task: mvbench_fine_grained_pose_future_l1
+dataset_name: fine_grained_pose
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: fine_grained_pose
+    pre_prompt: ""
+    post_prompt: ""

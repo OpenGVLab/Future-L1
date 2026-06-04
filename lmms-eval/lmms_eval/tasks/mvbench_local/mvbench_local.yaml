@@ -1,0 +1,22 @@
+group: mvbench_local
+task:
+  - mvbench_action_sequence_local
+  - mvbench_moving_count_local
+  - mvbench_action_prediction_local
+  - mvbench_episodic_reasoning_local
+  - mvbench_action_antonym_local
+  - mvbench_action_count_local
+  - mvbench_scene_transition_local
+  - mvbench_object_shuffle_local
+  - mvbench_object_existence_local
+  - mvbench_fine_grained_pose_local
+  - mvbench_unexpected_action_local
+  - mvbench_moving_direction_local
+  - mvbench_state_change_local
+  - mvbench_object_interaction_local
+  - mvbench_character_order_local
+  - mvbench_action_localization_local
+  - mvbench_counterfactual_inference_local
+  - mvbench_fine_grained_action_local
+  - mvbench_moving_attribute_local
+  - mvbench_egocentric_navigation_local

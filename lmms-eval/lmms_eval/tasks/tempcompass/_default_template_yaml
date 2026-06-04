@@ -1,0 +1,39 @@
+dataset_path: lmms-lab/TempCompass
+dataset_kwargs:
+  token: True
+  video: True
+  cache_dir: tempcompass
+
+
+### direct answer
+generation_kwargs: # Auxiliary arguments for the `generate` function from HF transformers library. This would be used in different models files.
+  max_new_tokens: 16
+  temperature: 0
+  top_p: 1.0
+  num_beams: 1
+  do_sample: false
+  
+lmms_eval_specific_kwargs:
+  default:
+    pre_prompt: ""
+    post_prompt: {
+      "multi-choice": "\nPlease directly give the best option:",
+      "yes_no": "\nPlease answer yes or no:",
+      "caption_matching": "\nPlease directly give the best option:",
+      "captioning": ""
+    }
+   
+
+### reasoning
+# generation_kwargs: # Auxiliary arguments for the `generate` function from HF transformers library. This would be used in different models files.
+#   max_new_tokens: 2048
+  
+# lmms_eval_specific_kwargs:
+#   default:
+#     pre_prompt: "You FIRST think about the reasoning process as an internal monologue and then provide the final answer.\nThe reasoning process MUST BE enclosed within <think> </think> tags. The final answer MUST BE put in <answer> </answer> tags.\n"
+#     post_prompt: {
+#       "multi-choice": "",
+#       "yes_no": "",
+#       "caption_matching": "",
+#       "captioning": ""
+#     }

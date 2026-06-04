@@ -1,0 +1,61 @@
+# TwiFF-Bench (Think With Future Frames) — adapted for Qwen-VL series.
+#
+# Dataset is the parquet release at
+#   /path/to/your/data/VideoL1-Bench/TwiFF-Bench
+# which embeds question_images / reasoning_images as raw PNG bytes
+# (HF Image feature). The original BAGEL pipeline reads frames from the
+# matching mp4 clip; per the upstream README this is interchangeable with
+# using the embedded images directly, which we do here so no video files
+# are required.
+#
+# Field mapping (HF schema -> original TwiFF jsonl):
+#   question_images_index    -> frames
+#   reasoning_images_index   -> recon_frames
+#   question_images          -> read_frames_decord(video, clip=frames)
+#   reasoning_images         -> read_frames_decord(video, clip=recon_frames)
+#
+# The system prompt and judge prompt are kept verbatim from
+# /path/to/your/TwiFFBench so the
+# evaluation protocol matches BAGEL exactly; only the inference backend
+# (BAGEL InterleaveInferencer) is replaced by lmms-eval's Qwen-VL adapter.
+
+dataset_path: parquet
+dataset_kwargs:
+  data_files:
+    test:
+      - /path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00000-of-00004.parquet
+      - /path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00001-of-00004.parquet
+      - /path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00002-of-00004.parquet
+      - /path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00003-of-00004.parquet
+
+task: twiffbench_thinking_nop
+test_split: test
+output_type: generate_until
+doc_to_visual: !function utils.twiffbench_doc_to_visual
+doc_to_text: !function utils.twiffbench_doc_to_text
+doc_to_target: "answer"
+
+# Mirrors the inference hyper-parameters from
+# inference_benchmark_TwiFF_mp.py (max_think_token_n=4096) and
+# benchmark_eval.sh (temperature=0.0, top_k=1).
+generation_kwargs:
+  max_new_tokens: 4096
+  temperature: 0.0
+  top_p: 1.0
+  num_beams: 1
+  do_sample: false
+
+process_results: !function utils.twiffbench_process_results
+
+lmms_eval_specific_kwargs:
+  default:
+    pre_prompt: ""
+    post_prompt: ""
+
+metric_list:
+  - metric: twiffbench_score
+    aggregation: !function utils.twiffbench_aggregate_results
+    higher_is_better: true
+
+metadata:
+  - version: 0.0

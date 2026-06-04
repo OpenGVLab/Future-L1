@@ -1,0 +1,9 @@
+include: _reasoning_template_yaml
+task: mvbench_moving_attribute_future_l1
+dataset_name: moving_attribute
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: moving_attribute
+    pre_prompt: ""
+    post_prompt: ""

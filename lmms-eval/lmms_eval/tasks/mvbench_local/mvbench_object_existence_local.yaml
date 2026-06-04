@@ -1,0 +1,9 @@
+include: _default_template_yaml_local
+dataset_path: $LMMS_EVAL_MVBENCH_DATASET_DIR/object_existence
+task: mvbench_object_existence_local
+dataset_name: object_existence
+test_split: train
+lmms_eval_specific_kwargs:
+  default:
+    sub_task: object_existence
+    post_prompt: "Only give the best option.\n"
