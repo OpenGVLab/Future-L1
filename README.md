@@ -5,10 +5,9 @@
   <a href="#-highlights"><b>Highlights</b></a> •
   <a href="#-method"><b>Method</b></a> •
   <a href="#-results"><b>Results</b></a> •
-  <a href="#-analysis"><b>Analysis</b></a> •
   <a href="#-getting-started"><b>Getting Started</b></a> •
   <a href="#-acknowledgements"><b>Acknowledgements</b></a> •
-  <a href="#-related-work"><b>Related Work</b></a> •
+  <a href="#-previous-work"><b>Previous Work</b></a> •
   <a href="#-citation"><b>Citation</b></a>
 </p>
 
@@ -88,13 +87,6 @@ L_SFT = L_CE + λ · L_Latent
 
 where latent positions are aligned to Qwen3-VL vision-encoder embeddings of the corresponding future reasoning frames.
 
-<p align="center">
-  <img src="asset/future_l1_50k_wordcloud.png" width="48%" alt="Future-L1-50K word cloud"/>
-  &nbsp;
-  <img src="asset/future_l1_50k_wordcloud_video.png" width="48%" alt="Future-L1-50K video word cloud"/>
-</p>
-<p align="center"><em><b>Figure 3.</b> Topic distribution of curated Future-L1-50K samples.</em></p>
-
 ### Stage 2: LA-DAPO RL
 
 SFT provides a grounded initialization, but teacher-forced latents are not directly optimized for sampled prediction success. **LA-DAPO** (Latent-Aware Direct Advantage Policy Optimization) keeps DAPO's answer and format rewards and adds two trajectory-level latent terms:
@@ -116,75 +108,124 @@ Paper defaults: `λ_a=0.9`, `λ_f=0.1`, `λ_c=0.2`, `λ_d=0.1`, contrastive temp
 
 ## Results
 
-### FutureBench
+### Table 1: Main results on FutureBench
 
-Accuracy (%) on [FutureBench](https://github.com/OpenGVLab/FutureBench). Future-L1 is built on **Qwen3-VL-8B-Instruct** and uses **32 input frames** at evaluation.
+Accuracy (%); best results in **bold**. Future-L1 uses **32 input frames** at evaluation.
 
-| Model | Size | Training | 1-Hop | 2-Hop | 3-Hop | Interp. | Avg. |
+| Model | Size | Method | 1-Hop | 2-Hop | 3-Hop | Interp. | Avg. |
 |---|---:|---|---:|---:|---:|---:|---:|
-| GPT-4o | — | Zero-shot | 61.9 | 61.7 | 72.1 | 51.6 | 59.0 |
-| Qwen3-VL | 30B-A3B | Zero-shot | 65.3 | 70.5 | 76.1 | 62.2 | 66.9 |
+| GPT-4o | — | Zero-Shot | 61.9 | 61.7 | 72.1 | 51.6 | 59.0 |
+| GPT-5 | — | Zero-Shot | 59.6 | 57.3 | 62.6 | 55.6 | 57.9 |
+| Qwen3-VL | 30B-A3B | Zero-Shot | 65.3 | 70.5 | 76.1 | 62.2 | 66.9 |
+| Video-R1 | 7B | SFT+RL | 67.6 | 65.3 | 61.2 | 61.8 | 63.3 |
 | Video-o3 | 7B | SFT+RL | 68.2 | 73.6 | 63.2 | 69.7 | 68.9 |
+| NEP | 7B | SFT+RL | 66.2 | 69.9 | 63.7 | 68.1 | 67.3 |
 | Video-CoE | 7B | SFT+RL | 80.9 | 83.9 | 71.6 | 71.4 | 75.0 |
-| Qwen3-VL-Instruct | 8B | Zero-shot | 64.2 | 65.8 | 66.2 | 55.8 | 61.0 |
-| Text-only SFT on Future-L1-50K | 8B | SFT | 67.6 | 66.8 | 68.2 | 62.0 | 65.0 |
+| LVR | 7B | SFT+RL | 22.5 | 26.4 | 22.9 | 17.6 | 21.0 |
+| Monet | 7B | SFT+RL | 46.8 | 47.2 | 45.3 | 49.7 | 47.9 |
+| SwimBird | 8B | SFT | 59.0 | 66.8 | 64.7 | 61.8 | 62.8 |
+| Qwen3-VL-Instruct | 8B | Zero-Shot | 64.2 | 65.8 | 66.2 | 55.8 | 61.0 |
+| Text-Only SFT (on Future-L1-50K) | 8B | SFT | 67.6 | 66.8 | 68.2 | 62.0 | 65.0 |
 | **Future-L1-SFT** | 8B | SFT | 70.5 | 73.1 | 77.6 | 72.2 | **73.2** |
 | **Future-L1-RL** | 8B | SFT+RL | **83.2** | **86.5** | **86.6** | **85.1** | **85.4** |
 
-### TwiFF-Bench
+### Table 2: Main results on TwiFF-Bench
 
-[TwiFF-Bench](https://github.com/TwiFF-Project/TwiFF) evaluates both reasoning trajectory quality and final answer quality on a 0–5 scale.
+Avg. = (CoT + Ans) / 2; best results in **bold**.
 
 | Model | Size | CoT | Answer | Avg. |
 |---|---:|---:|---:|---:|
 | Qwen2.5-VL | 7B | 2.46 | 1.63 | 2.05 |
+| InternVL3.5 | 8B | 2.35 | 1.85 | 2.10 |
+| DeepEyes | 7B | 2.54 | 2.20 | 2.37 |
+| Janus-Pro | 7B | 2.04 | 1.04 | 1.54 |
+| Bagel | 7B | 2.29 | 1.85 | 2.07 |
 | TwiFF-300K | 7B | 2.90 | 2.55 | 2.73 |
 | TwiFF-2.7M | 7B | 2.95 | 2.62 | 2.79 |
-| Qwen3-VL-Instruct | 8B | 2.75 | 2.14 | 2.44 |
+| Qwen3-VL-Instruct (Zero-Shot) | 8B | 2.75 | 2.14 | 2.44 |
 | **Future-L1-SFT** | 8B | 2.62 | 2.42 | 2.52 |
 | **Future-L1-RL** | 8B | **3.11** | **2.97** | **3.04** |
 
----
+### Table 3: SFT hyperparameter ablation on FutureBench
 
-## Analysis
+| Setting | 1-Hop | 2-Hop | 3-Hop | Interp. | Avg. |
+|---|---:|---:|---:|---:|---:|
+| *Latent MSE weight λ* | | | | | |
+| 0.01 | 68.2 | 69.9 | 73.1 | 67.5 | 69.1 |
+| 0.05 | 71.1 | 72.0 | 73.6 | 69.3 | 70.9 |
+| **0.10** | 70.5 | 73.1 | **77.6** | **72.2** | **73.2** |
+| 0.20 | 69.9 | **76.7** | 74.6 | 70.1 | 72.2 |
+| 0.50 | **73.4** | 71.0 | 71.6 | 69.3 | 70.7 |
+| 1.00 | **73.4** | 73.1 | 68.7 | 67.1 | 69.5 |
+| *Maximum latent budget L_max* | | | | | |
+| 2 | 66.5 | 74.1 | 74.6 | 69.3 | 70.7 |
+| **4** | 70.5 | 73.1 | **77.6** | 72.2 | **73.2** |
+| 8 | 65.9 | **75.1** | 73.6 | **72.4** | 72.1 |
+| 16 | 69.9 | 72.5 | 71.1 | 70.8 | 71.0 |
+| 32 | 69.4 | 72.0 | 71.1 | 69.5 | 70.3 |
+| 64 | 67.1 | 68.9 | 70.6 | 65.6 | 67.4 |
+
+### Table 4: RL objective ablation on FutureBench
+
+| Method | 1-Hop | 2-Hop | 3-Hop | Interp. | Avg. |
+|---|---:|---:|---:|---:|---:|
+| Text-Only SFT | 67.6 | 66.8 | 68.2 | 62.0 | 65.0 |
+| &nbsp;&nbsp;+ GRPO | 77.5 | 78.8 | 78.1 | 77.1 | 77.7 |
+| &nbsp;&nbsp;+ DAPO | **83.2** | 81.3 | 78.1 | 71.2 | 76.3 |
+| Future-L1-SFT | 70.5 | 73.1 | 77.6 | 72.2 | 73.2 |
+| &nbsp;&nbsp;+ GRPO | 82.7 | 84.5 | 85.1 | 81.2 | 82.8 |
+| &nbsp;&nbsp;+ DePO | 78.0 | 80.3 | 86.6 | 80.2 | 81.1 |
+| &nbsp;&nbsp;+ DAPO | **83.2** | 85.5 | 86.6 | 82.4 | 83.8 |
+| &nbsp;&nbsp;&nbsp;&nbsp;+ R_ctr | **83.2** | 86.0 | 87.1 | 83.2 | 84.5 |
+| &nbsp;&nbsp;&nbsp;&nbsp;+ R_div | 82.7 | **87.0** | **87.6** | 83.4 | 84.8 |
+| **Future-L1-RL** | **83.2** | 86.5 | 86.6 | **85.1** | **85.4** |
+
+### Table 5: LA-DAPO reward coefficient ablation on FutureBench
+
+| Setting | 1-Hop | 2-Hop | 3-Hop | Interp. | Avg. |
+|---|---:|---:|---:|---:|---:|
+| *Outcome-contrastive weight λ_c* | | | | | |
+| 0.01 | 81.5 | 84.5 | 86.1 | 83.4 | 83.8 |
+| 0.05 | 82.7 | **87.0** | 86.1 | 83.0 | 84.3 |
+| 0.10 | **84.4** | 86.5 | 87.1 | 84.0 | 85.1 |
+| **0.20** | 83.2 | 86.5 | 86.6 | **85.1** | **85.4** |
+| 0.50 | 82.1 | 86.0 | 86.1 | 83.0 | 84.0 |
+| 1.00 | 83.8 | 86.5 | 86.6 | 84.5 | 85.1 |
+| *Temporal diversity weight λ_d* | | | | | |
+| 0.01 | 83.2 | 86.5 | 86.6 | 83.8 | 84.8 |
+| 0.05 | **83.8** | **87.0** | 86.6 | 84.3 | 85.1 |
+| **0.10** | 83.2 | 86.5 | 86.6 | **85.1** | **85.4** |
+| 0.20 | 80.9 | 82.9 | **87.1** | 83.2 | 83.5 |
+| 0.50 | 79.8 | 83.4 | 85.6 | 81.6 | 82.4 |
+| 1.00 | 78.0 | 82.4 | 85.6 | 81.0 | 81.6 |
+
+### Table 6: Effect of visual-gain filtering
+
+| Training Set | 1-Hop | 2-Hop | 3-Hop | Interp. | Avg. |
+|---|---:|---:|---:|---:|---:|
+| Zero-Shot | 64.2 | 65.8 | 66.2 | 55.8 | 61.0 |
+| Random 50K | 67.6 | 68.9 | 70.1 | 67.7 | 68.4 |
+| **Future-L1-50K** | **70.5** | **73.1** | **77.6** | **72.2** | **73.2** |
 
 <p align="center">
-  <img src="asset/latent_block_tsne.png" width="72%" alt="t-SNE of latent spans"/>
+  <img src="asset/futurebench_latent_span_donut.png" width="88%" alt="Latent-span usage by reasoning depth"/>
 </p>
-<p align="center"><em><b>Figure 4.</b> t-SNE of Future-L1-RL latent embeddings on FutureBench; sequential latent spans form distinct clusters.</em></p>
+<p align="center"><em><b>Figure 3.</b> Latent-span usage by reasoning depth. Donuts show span-count distributions; values report mean spans over six RL settings.</em></p>
 
 <p align="center">
-  <img src="asset/overall_reward.png" width="23%" alt="Overall reward"/>
-  <img src="asset/acc_reward.png" width="23%" alt="Accuracy reward"/>
-  <img src="asset/format_reward.png" width="23%" alt="Format reward"/>
-  <img src="asset/cvr_reward.png" width="23%" alt="Contrastive reward"/>
+  <img src="asset/data_volume_combined.png" width="88%" alt="RL data scaling on TwiFF-Bench"/>
 </p>
-<p align="center"><em><b>Figure 5.</b> Reward dynamics during RL. Future-L1 shows higher and more stable rewards than DAPO.</em></p>
+<p align="center"><em><b>Figure 4.</b> RL data scaling on TwiFF-Bench. Scores improve as LA-DAPO uses 5K, 10K, and 20K retained visual-gain samples.</em></p>
 
-<p align="center">
-  <img src="asset/futurebench_latent_span_donut.png" width="48%" alt="Latent span usage"/>
-  &nbsp;
-  <img src="asset/data_volume_combined.png" width="48%" alt="RL data scaling"/>
-</p>
-<p align="center"><em><b>Figure 6.</b> Left: latent-span usage by reasoning depth. Right: LA-DAPO benefits monotonically from more visual-gain RL data (5K → 20K).</em></p>
+### Table 7: Inference cost on FutureBench
 
-### Qualitative examples
-
-<p align="center">
-  <img src="asset/case1.png" width="32%" alt="Qualitative case 1"/>
-  <img src="asset/case2.png" width="32%" alt="Qualitative case 2"/>
-  <img src="asset/case3.png" width="32%" alt="Qualitative case 3"/>
-</p>
-<p align="center"><em><b>Figure 7.</b> Future-L1 imagines intermediate latent visual states that support correct multi-step future prediction.</em></p>
-
-### Ablation snapshot
-
-| Study | Best setting | Finding |
-|---|---|---|
-| Latent MSE weight | `λ=0.1` | Explicit but not dominant latent supervision works best |
-| Maximum latent budget | `L_max=4` | Short supervised spans outperform long latent spans |
-| RL objective | LA-DAPO | Latent-aware rewards improve over GRPO, DePO, and DAPO |
-| RL data scale | 20K | LA-DAPO benefits monotonically from more visual-gain data |
+| Model | Tokens ↓ | Acc. ↑ | Latency (s) ↓ | Acc./s ↑ |
+|---|---:|---:|---:|---:|
+| Video-R1 | 398.5 | 63.3 | 3.28 | 19.3 |
+| Video-o3 | 348.6 | 68.9 | 25.90 | 2.7 |
+| Qwen3-VL-8B | 288.8 | 61.0 | 1.18 | 51.7 |
+| **Future-L1-SFT** | 205.3 | 73.1 | 0.96 | 76.1 |
+| **Future-L1-RL** | **195.3** | **85.4** | **0.91** | **93.8** |
 
 ---
 
@@ -225,6 +266,16 @@ cd RL_v2 && pip install -e . && cd ..
 # Evaluation
 cd lmms-eval && pip install -e . && cd ..
 ```
+
+### Prepare the backbone checkpoint
+
+Before SFT or RL training, replace the Qwen3-VL weight directory's `chat_template.json` with the one shipped in this repository. This registers Future-L1 special tokens (`<|latent_start|>`, `<|latent|>`, `<|latent_end|>`, `<reason>`, etc.) in the chat template, following the same practice as [SwimBird](https://github.com/Accio-Lab/SwimBird).
+
+```bash
+cp chat_template.json /path/to/Qwen3-VL-8B-Instruct/chat_template.json
+```
+
+Run this once on the base backbone before `scripts/train.sh` / `scripts/train_twiff.sh`. Checkpoints saved from that run will carry the updated template forward to RL and evaluation.
 
 ### SFT Training
 
@@ -373,27 +424,20 @@ We gratefully acknowledge the contributions of the open-source community, partic
 
 ---
 
+## Previous Work
+
+- [**LaViT**](https://github.com/Svardfox/LaViT)
+
+---
+
 ## Citation
 
-If you find Future-L1 useful, please cite:
-
 ```bibtex
-@article{futurel1,
-  title   = {Imagine Before You Predict: Interleaved Latent Visual Reasoning for Video Event Prediction},
-  author  = {Anonymous},
-  journal = {EMNLP},
-  year    = {2026}
+@article{tbd,
+  title   = {TBD},
+  author  = {TBD},
+  year    = {TBD}
 }
 ```
 
----
-
-## License
-
-This repository follows the license in `LICENSE`. Third-party datasets, benchmarks, base models, and evaluation frameworks should be used under their respective licenses and terms.
-
----
-
-## Related Work
-
-- [**LaViT**](https://github.com/Svardfox/LaViT) — *Aligning Latent Visual Thoughts for Multi-modal Reasoning* ([arXiv:2601.10129](https://arxiv.org/abs/2601.10129)). LaViT supervises visual thought trajectories extracted from a teacher model to train efficient student MLLMs with `<lvr>` latent tokens, complementing our interleaved latent-span design for video event prediction.
+Citation will be updated upon publication.
