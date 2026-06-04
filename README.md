@@ -2,15 +2,12 @@
 <h3 align="center">Interleaved Latent Visual Reasoning for Video Event Prediction</h3>
 
 <p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/arXiv-TBD-b31b1b" alt="arXiv"/></a>
-</p>
-
-<p align="center">
   <a href="#highlights"><b>Highlights</b></a> •
   <a href="#getting-started"><b>Getting Started</b></a> •
   <a href="#results"><b>Results</b></a> •
   <a href="#acknowledgements"><b>Acknowledgements</b></a> •
   <a href="#citation"><b>Citation</b></a>
+  <a href="#"><img src="https://img.shields.io/badge/arXiv-TBD-b31b1b" alt="arXiv"/></a>
 </p>
 
 <p align="center">
@@ -52,12 +49,15 @@ cd lmms-eval && pip install -e . && cd ..
 cp chat_template.json /path/to/Qwen3-VL-8B-Instruct/chat_template.json
 
 # SFT
-bash scripts/train.sh          # Future-L1 format
 bash scripts/train_twiff.sh    # TwiFF-style mixed dataset
 
-# RL (LA-DAPO)
+# RL (LA-DAPO: DAPO + R_ctr + R_div)
 cd RL_v2
-MODEL_PATH=/path/to/Future-L1-SFT TRAIN_FILES=/path/to/RL_20K.json bash train.sh depo
+MODEL_PATH=/path/to/Future-L1-SFT \
+TRAIN_FILES=/path/to/RL_20K.json \
+FUTURE_L1_LATENT_CTR_LAMBDA=0.2 \
+FUTURE_L1_LATENT_DIV_LAMBDA=0.1 \
+bash train.sh dapo
 
 # Evaluation
 cd lmms-eval
@@ -74,7 +74,6 @@ Set `MODEL_PATH`, `DATA_PATH`, `TRAIN_FILES`, and `OUTPUT_DIR` in the launch scr
 | | FutureBench (Acc.) | TwiFF-Bench (Avg.) |
 |---|---:|---:|
 | Qwen3-VL-8B (zero-shot) | 61.0 | 2.44 |
-| Text-only SFT on Future-L1-50K | 65.0 | — |
 | **Future-L1-SFT** | **73.2** | 2.52 |
 | **Future-L1-RL (LA-DAPO)** | **85.4** | **3.04** |
 
@@ -86,10 +85,7 @@ Set `MODEL_PATH`, `DATA_PATH`, `TRAIN_FILES`, and `OUTPUT_DIR` in the launch scr
 
 We gratefully acknowledge the contributions of the open-source community, particularly:
 
-- [Qwen-VL-Series-Finetune](https://github.com/2U1/Qwen-VL-Series-Finetune)
-- [Latent Visual Reasoning (LVR)](https://github.com/VincentLeebang/lvr)
-- [SwimBird](https://github.com/Accio-Lab/SwimBird)
-- [EasyR1](https://github.com/hiyouga/easyr1)
+- [Qwen-VL-Series-Finetune](https://github.com/2U1/Qwen-VL-Series-Finetune), [Latent Visual Reasoning (LVR)](https://github.com/VincentLeebang/lvr), [SwimBird](https://github.com/Accio-Lab/SwimBird), [EasyR1](https://github.com/hiyouga/easyr1)
 - [LaViT](https://github.com/Svardfox/LaViT) — Aligning latent visual thoughts for multi-modal reasoning via teacher-extracted visual thought trajectories.
 
 ---
