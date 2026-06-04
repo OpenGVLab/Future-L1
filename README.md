@@ -39,7 +39,7 @@
 <td align="center" width="50%">
 <img src="asset/futurebench_latent_span_donut.png" width="100%" alt="Latent-span usage by reasoning depth"/>
 <br/><br/>
-<em><b>Figure 4.</b> Latent-span usage by reasoning depth. Donuts show span-count distributions; values report mean spans over six RL settings.</em>
+<em><b>Figure 4.</b> Latent-span usage by reasoning depth. Donuts show span-count distributions.</em>
 </td>
 <td align="center" width="50%">
 <img src="asset/data_volume_combined.png" width="100%" alt="RL data scaling on TwiFF-Bench"/>
@@ -52,29 +52,20 @@
 
 **Table 1. Main results on FutureBench.** Accuracy (%); best results are in **bold**.
 
-| Model | Size | Method | Frames | 1-Hop | 2-Hop | 3-Hop | Interp. | AVG |
-|---|---:|---|---:|---:|---:|---:|---:|---:|
-| *Open-source and Proprietary Models* |||||||||
-| Qwen2.5-VL-Instruct | 72B | Zero-Shot | 32 | 55.5 | 68.4 | 63.7 | 53.2 | 58.3 |
-| Qwen3-VL | 30B-A3B | Zero-Shot | 32 | 65.3 | 70.5 | 76.1 | 62.2 | 66.9 |
-| GPT-4o | — | Zero-Shot | 32 | 61.9 | 61.7 | 72.1 | 51.6 | 59.0 |
-| GPT-5 | — | Zero-Shot | 32 | 59.6 | 57.3 | 62.6 | 55.6 | 57.9 |
-| *Video Reasoning Models* |||||||||
-| Video-RFT | 7B | SFT+RL | 32 | 62.4 | 53.9 | 50.7 | 53.8 | 54.6 |
-| Video-R1 | 7B | SFT+RL | 32 | 67.6 | 65.3 | 61.2 | 61.8 | 63.3 |
-| VideoAuto-R1 | 8B | SFT+RL | 32 | 63.6 | 69.4 | 67.7 | 59.3 | 63.4 |
-| Video-o3 | 7B | SFT+RL | 32 | 68.2 | 73.6 | 63.2 | 69.7 | 68.9 |
-| NEP | 7B | SFT+RL | 32 | 66.2 | 69.9 | 63.7 | 68.1 | 67.3 |
-| Video-CoE | 7B | SFT+RL | 32 | 80.9 | 83.9 | 71.6 | 71.4 | 75.0 |
-| *Latent Visual Reasoning Models* |||||||||
-| LVR | 7B | SFT+RL | 32 | 22.5 | 26.4 | 22.9 | 17.6 | 21.0† |
-| Monet | 7B | SFT+RL | 32 | 46.8 | 47.2 | 45.3 | 49.7 | 47.9 |
-| SwimBird | 8B | SFT | 32 | 59.0 | 66.8 | 64.7 | 61.8 | 62.8 |
-| *Ours* |||||||||
-| Qwen3-VL-Instruct | 8B | Zero-Shot | 32 | 64.2 | 65.8 | 66.2 | 55.8 | 61.0 |
-| Text-Only SFT (on Future-L1-50K) | 8B | SFT | 32 | 67.6 | 66.8 | 68.2 | 62.0 | 65.0 |
-| **Future-L1-SFT** | 8B | SFT | 32 | 70.5 | 73.1 | 77.6 | 72.2 | **73.2** |
-| **Future-L1-RL** | 8B | SFT+RL | 32 | **83.2** | **86.5** | **86.6** | **85.1** | **85.4** |
+| Model | Method | 1-Hop | 2-Hop | 3-Hop | Interp. | AVG |
+|---|---|---:|---:|---:|---:|---:|
+| GPT-4o | Zero-Shot | 61.9 | 61.7 | 72.1 | 51.6 | 59.0 |
+| GPT-5 | Zero-Shot | 59.6 | 57.3 | 62.6 | 55.6 | 57.9 |
+| Video-R1 | SFT+RL | 67.6 | 65.3 | 61.2 | 61.8 | 63.3 |
+| VideoAuto-R1 | SFT+RL | 63.6 | 69.4 | 67.7 | 59.3 | 63.4 |
+| Video-o3 | SFT+RL | 68.2 | 73.6 | 63.2 | 69.7 | 68.9 |
+| NEP | SFT+RL | 66.2 | 69.9 | 63.7 | 68.1 | 67.3 |
+| Video-CoE | SFT+RL | 80.9 | 83.9 | 71.6 | 71.4 | 75.0 |
+| Monet | SFT+RL | 46.8 | 47.2 | 45.3 | 49.7 | 47.9 |
+| SwimBird | SFT | 59.0 | 66.8 | 64.7 | 61.8 | 62.8 |
+| Qwen3-VL-Instruct | Zero-Shot | 64.2 | 65.8 | 66.2 | 55.8 | 61.0 |
+| **Future-L1-SFT** | SFT | 70.5 | 73.1 | 77.6 | 72.2 | **73.2** |
+| **Future-L1-RL** | SFT+RL | **83.2** | **86.5** | **86.6** | **85.1** | **85.4** |
 
 <p align="center">
 <table>
@@ -83,21 +74,13 @@
 
 **Table 2. Main results on TwiFF-Bench.** Avg. = (CoT + Ans) / 2; best results are in **bold**.
 
-| Model | Size | CoT | Answer | Avg. |
-|---|---:|---:|---:|---:|
-| *Multimodal Large Language Models* |||||
-| Qwen2.5-VL | 7B | 2.46 | 1.63 | 2.05 |
-| InternVL3.5 | 8B | 2.35 | 1.85 | 2.10 |
-| DeepEyes | 7B | 2.54 | 2.20 | 2.37 |
-| *Unified Models* |||||
-| Janus-Pro | 7B | 2.04 | 1.04 | 1.54 |
-| Bagel | 7B | 2.29 | 1.85 | 2.07 |
-| TwiFF-300K | 7B | 2.90 | 2.55 | 2.73 |
-| TwiFF-2.7M | 7B | 2.95 | 2.62 | 2.79 |
-| *Ours* |||||
-| Zero-Shot | 8B | 2.75 | 2.14 | 2.44 |
-| **Future-L1-SFT** | 8B | 2.62 | 2.42 | 2.52 |
-| **Future-L1-RL** | 8B | **3.11** | **2.97** | **3.04** |
+| Model | CoT | Answer | Avg. |
+|---|---:|---:|---:|
+| Bagel | 2.29 | 1.85 | 2.07 |
+| TwiFF-2.7M | 2.95 | 2.62 | 2.79 |
+| Zero-Shot | 2.75 | 2.14 | 2.44 |
+| **Future-L1-SFT** | 2.62 | 2.42 | 2.52 |
+| **Future-L1-RL** | **3.11** | **2.97** | **3.04** |
 
 </td>
 <td valign="top" width="48%">
