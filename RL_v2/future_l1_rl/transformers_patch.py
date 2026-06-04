@@ -1,10 +1,10 @@
 """FutureL1 transformers monkey-patch dispatcher.
 
 Re-exports the per-backbone forward replacements from
-``VideoL1/src/train/monkey_patch_forward.py`` and applies them based on the
+``Future-L1/src/train/monkey_patch_forward.py`` and applies them based on the
 ``FUTURE_L1_BACKBONE_MODEL_TYPE`` env var.
 
-Layout assumption: ``FUTURE_L1_CODE_ROOT`` (or the auto-detected VideoL1 root)
+Layout assumption: ``FUTURE_L1_CODE_ROOT`` (or the auto-detected Future-L1 root)
 must be on ``sys.path`` before this module is imported. The top-level
 ``future_l1_rl_patch.py`` handles that.
 """
@@ -45,7 +45,7 @@ def apply(model_type: str | None = None) -> None:
 
     def _patch_qwen3_5() -> None:
         # Both import-time *and* call-time can fail when transformers is too
-        # old for Qwen3.5 (VideoL1's monkey patch raises ImportError lazily
+        # old for Qwen3.5 (Future-L1's monkey patch raises ImportError lazily
         # inside the replace_qwen3_5_* helpers as well).
         try:
             from src.train.monkey_patch_forward import (  # noqa: PLC0415

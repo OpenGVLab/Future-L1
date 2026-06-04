@@ -1,4 +1,4 @@
-dataset_path: /path/to/your/data/VideoL1-Bench/FutureBench
+dataset_path: /path/to/your/data/Future-L1-Bench/FutureBench
 dataset_kwargs:
   load_from_disk: True
   cache_dir: /path/to/your/data/V1-33K/first_segment_video

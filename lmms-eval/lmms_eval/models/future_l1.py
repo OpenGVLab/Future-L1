@@ -9,18 +9,18 @@ handled identically to the VLMEvalKit reference implementation in
 ``vlmeval/vlm/future_l1/model.py``.
 
 Required environment:
-    Set one of these to the FutureL1 repo root that contains ``src/model/future_l1``
+    Set one of these to the Future-L1 repo root that contains ``src/model/future_l1``
     and ``src/train/monkey_patch_forward.py``:
 
-        export ROT_CODE_ROOT=/path/to/FutureL1          # preferred
-        export FUTURE_L1_CODE_ROOT=/path/to/FutureL1     # alias
+        export FUTURE_L1_ROOT=/path/to/Future-L1          # preferred
+        export FUTURE_L1_CODE_ROOT=/path/to/Future-L1     # alias
 
-    Or pass it via ``--model_args code_root=/path/to/FutureL1``.
+    Or pass it via ``--model_args code_root=/path/to/Future-L1``.
 
 Example:
     python -m lmms_eval \
         --model future_l1 \
-        --model_args pretrained=/path/to/future_l1/ckpt,code_root=/path/to/FutureL1,attn_implementation=flash_attention_2 \
+        --model_args pretrained=/path/to/checkpoint,code_root=/path/to/Future-L1,attn_implementation=flash_attention_2 \
         --tasks mmstar --batch_size 1
 """
 
@@ -274,8 +274,10 @@ Use the following tags to switch your thinking mode:
 def _resolve_code_root(code_root: Optional[str]) -> str:
     candidates = [
         code_root,
-        os.environ.get("ROT_CODE_ROOT"),
         os.environ.get("FUTURE_L1_CODE_ROOT"),
+        os.environ.get("FUTURE_L1_ROOT"),
+        os.environ.get("VIDEO_L1_ROOT"),
+        os.environ.get("ROT_CODE_ROOT"),
     ]
     for c in candidates:
         if not c:
@@ -287,8 +289,8 @@ def _resolve_code_root(code_root: Optional[str]) -> str:
         if (os.path.isdir(future_l1_pkg) or os.path.isfile(future_l1_mod)) and os.path.isfile(monkey_patch):
             return c
     raise ValueError(
-        "FutureL1 code_root not resolved. Pass `code_root=/path/to/FutureL1` "
-        "via --model_args, or set env var ROT_CODE_ROOT / FUTURE_L1_CODE_ROOT. "
+        "Future-L1 code_root not resolved. Pass `code_root=/path/to/Future-L1` "
+        "via --model_args, or set FUTURE_L1_ROOT / FUTURE_L1_CODE_ROOT. "
         "The directory must contain `src/model/future_l1(.py)` and `src/train/monkey_patch_forward.py`."
     )
 
@@ -532,7 +534,7 @@ class FutureL1(Qwen3_VL):
         If ``system_prompt`` was overridden via ``--model_args``, keep the user's
         string for all tasks.
         """
-        if str(task_name) not in ("twiffbench_future_l1", "twiffbench_swimbird"):
+        if str(task_name) != "twiffbench_future_l1":
             return self.system_prompt
         if self.system_prompt == FUTURE_L1_SYSTEM_PROMPT:
             return FUTURE_L1_SYSTEM_PROMPT_TWIFFBENCH

@@ -3,7 +3,7 @@
 This file ports the inference + GPT-judge pipeline from
 ``/path/to/your/TwiFFBench`` so the
 benchmark can be evaluated against Qwen-VL series (or any lmms-eval model)
-inside ``VideoL1/lmms-eval``.
+inside ``Future-L1/lmms-eval``.
 
 Inference path (lmms-eval):
     doc_to_visual    -> question_images (PIL list, position-faithful to the
@@ -18,7 +18,7 @@ Inference path (lmms-eval):
                         message structure with question/reasoning images and
                         ground-truth answer) and queries an OpenAI-compatible
                         chat completion API loaded from
-                        ``VideoL1/lmms-eval/.env``. Returns the macro-average
+                        ``Future-L1/lmms-eval/.env``. Returns the macro-average
                         of (reasoning_score + answer_score) on a 0-5 scale.
 
 The reasoning_images / reasoning_images_index fields are kept on the doc but
@@ -342,7 +342,7 @@ def twiffbench_process_results(doc, results):
 
 
 def _load_env_file() -> None:
-    """Load VideoL1/lmms-eval/.env into os.environ if not already set."""
+    """Load Future-L1/lmms-eval/.env into os.environ if not already set."""
     repo_root = Path(__file__).resolve().parents[3]
     env_path = repo_root / ".env"
     if not env_path.exists():

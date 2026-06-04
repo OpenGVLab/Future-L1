@@ -16,8 +16,8 @@ Required env vars:
 Optional:
     FUTURE_L1_BACKBONE_MODEL_TYPE  -- one of qwen3_vl, qwen2_5_vl, qwen3_5.
         Auto-patches all if unset.
-    FUTURE_L1_CODE_ROOT         -- absolute path to the VideoL1 repo root.
-        Defaults to the parent of this file's parent (i.e. ``VideoL1/``).
+    FUTURE_L1_CODE_ROOT         -- absolute path to the Future-L1 repo root.
+        Defaults to the parent of this file's parent (i.e. ``Future-L1/``).
     FUTURE_L1_APPLY_PROJ_HEAD   -- "1" to load and apply the projection head
         inside the vLLM runner during latent rollout (matches HF generate).
 """
@@ -30,7 +30,7 @@ import sys
 
 
 def _default_code_root() -> str:
-    # This file lives in VideoL1/RL_v2/. Code root is the VideoL1 directory.
+    # This file lives in Future-L1/RL_v2/. Code root is the Future-L1 directory.
     return os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 

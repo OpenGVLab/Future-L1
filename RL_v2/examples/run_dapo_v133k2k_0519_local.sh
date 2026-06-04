@@ -3,7 +3,7 @@
 # Run inside an rlaunch / interactive GPU node (same mounts as train.sh).
 #
 # Usage:
-#   cd ${VIDEO_L1_ROOT}/RL_v2
+#   cd ${FUTURE_L1_ROOT}/RL_v2
 #   bash examples/run_dapo_v133k2k_0519_local.sh
 set -euo pipefail
 

@@ -25,10 +25,10 @@ from transformers import (
     PreTrainedModel,
 )
 
-# VideoL1 root (…/VideoL1) so `from src.model.future_l1 import …` works
-_VIDEO_L1_ROOT = Path(__file__).resolve().parents[2]
-if str(_VIDEO_L1_ROOT) not in sys.path:
-    sys.path.insert(0, str(_VIDEO_L1_ROOT))
+# Future-L1 repo root so `from src.model.future_l1 import …` works
+_FUTURE_L1_ROOT = Path(__file__).resolve().parents[2]
+if str(_FUTURE_L1_ROOT) not in sys.path:
+    sys.path.insert(0, str(_FUTURE_L1_ROOT))
 
 from src.model.future_l1 import (  # noqa: E402
     RICE_Qwen3VL,

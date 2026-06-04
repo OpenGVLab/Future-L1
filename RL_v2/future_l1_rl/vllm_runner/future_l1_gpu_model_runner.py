@@ -87,7 +87,7 @@ logger = init_logger(__name__)
 
 # ==========================================================================
 # Projection-head helpers (kept in this module so the runner is a single
-# drop-in replacement). Mirrors ``VideoL1/src/model/projection_head.py``.
+# drop-in replacement). Mirrors ``Future-L1/src/model/projection_head.py``.
 # ==========================================================================
 class _FutureL1SwiGLU(nn.Module):
     def __init__(self, input_dim: int, hidden_dim: int):
@@ -225,7 +225,7 @@ class GPUModelRunner(_UpstreamGPUModelRunner):
         latent_id = _read_int_env("FUTURE_L1_LATENT_ID", "LATENT_ID")
 
         # ------------------------------------------------------------------
-        # Adaptive latent budget, mirroring VideoL1/src/model/future_l1.py:_future_l1_sample.
+        # Adaptive latent budget, mirroring Future-L1/src/model/future_l1.py:_future_l1_sample.
         #   * fixed_latent_budget=True  -> exactly max_latent_token, ignore the
         #                                   model's own <|latent_end|> sampling
         #   * fixed_latent_budget=False -> early-exit allowed; upper cap is
@@ -448,7 +448,7 @@ class GPUModelRunner(_UpstreamGPUModelRunner):
 
             if st["active"]:
                 sampled_tid = gen_ids[0] if gen_ids else None
-                # Mirror VideoL1/src/model/future_l1.py:_future_l1_sample's
+                # Mirror Future-L1/src/model/future_l1.py:_future_l1_sample's
                 # latent-exit rule:
                 #   * fixed_latent_budget=True  -> only force-exit on budget
                 #     exhaustion (model's <|latent_end|> sampling is ignored)

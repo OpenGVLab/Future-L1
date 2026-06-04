@@ -6,7 +6,7 @@ extracts the inner text of GT ``<answer>``/``<ans>`` and model ``<answer>``,
 then asks the judge to score **only** those two sentences (0–5). This aligns
 with TwiFF ``score[1]`` / Answer Accuracy but removes reasoning-chain context.
 
-Reads API config from ``VideoL1/lmms-eval/.env`` (same as post_score.py).
+Reads API config from ``Future-L1/lmms-eval/.env`` (same as post_score.py).
 
 Usage:
     python tools/twiffbench/post_answer_judge.py \\

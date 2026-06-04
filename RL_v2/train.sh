@@ -20,7 +20,8 @@ VAL_FILES=${VAL_FILES:-""}
 
 MODE=${1:-grpo}
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-VIDEO_L1_ROOT="${VIDEO_L1_ROOT:-$(cd "${SCRIPT_DIR}/.." && pwd)}"
+FUTURE_L1_ROOT="${FUTURE_L1_ROOT:-${VIDEO_L1_ROOT:-$(cd "${SCRIPT_DIR}/.." && pwd)}}"
+export FUTURE_L1_ROOT VIDEO_L1_ROOT="${FUTURE_L1_ROOT}" FUTURE_L1_CODE_ROOT="${FUTURE_L1_ROOT}"
 RL_V2_ROOT="${RL_V2_ROOT:-${SCRIPT_DIR}}"
 
 case "${MODE}" in
@@ -35,10 +36,10 @@ esac
 RUN_NAME=${RUN_NAME:-${EXPERIMENT_NAME:-${DEFAULT_RUN_NAME}}}
 # Save path aligned with upstream: gpfs2-shared training output.
 OUTPUT_DIR="${OUTPUT_DIR:-${RL_V2_ROOT}/outputs/${RUN_NAME}}"
-LOG_DIR=${LOG_DIR:-"${VIDEO_L1_ROOT}/logs"}
+LOG_DIR=${LOG_DIR:-"${FUTURE_L1_ROOT}/logs"}
 TIMESTAMP=$(date "+%Y%m%d-%H%M%S")
 
-export FUTURE_L1_CODE_ROOT="${VIDEO_L1_ROOT}"
+export FUTURE_L1_CODE_ROOT="${FUTURE_L1_ROOT}"
 export FUTURE_L1_RL_V2_ROOT="${RL_V2_ROOT}"
 export FUTURE_L1_RL_PATCH=1
 # Refuse silent fallback when the FutureL1 patch (transformers monkey patches +
@@ -90,7 +91,7 @@ export RAY_NUM_CPUS=${RAY_NUM_CPUS:-128}
 export RAY_NUM_GPUS=${RAY_NUM_GPUS:-8}
 export RAY_SPILL_DIR=${RAY_SPILL_DIR:-/tmp/ray_spill}
 export RAY_TMPDIR=${RAY_TMPDIR:-/tmp/ray_tmp}
-export WANDB_PROJECT=${WANDB_PROJECT:-VideoL1-RL}
+export WANDB_PROJECT=${WANDB_PROJECT:-Future-L1-RL}
 export WANDB_MODE=${WANDB_MODE:-offline}
 # W&B offline data: repo-local wandb/0518/<RUN_NAME> (override with WANDB_DIR / WANDB_RUN_ROOT).
 WANDB_RUN_ROOT="${WANDB_RUN_ROOT:-${RL_V2_ROOT}/wandb}"
@@ -150,7 +151,7 @@ export LATENT_ID="${FUTURE_L1_LATENT_ID}"
 # Don't force a latent budget by default. The FutureL1 vLLM runner reads
 # ``max_latent_token`` / ``loose_latent_budget`` / ``infer_latent_multiplier``
 # / ``fixed_latent_budget`` from the checkpoint's ``hf_config`` (same logic
-# as ``_future_l1_sample`` in ``VideoL1/src/model/future_l1.py``). Export
+# as ``_future_l1_sample`` in ``Future-L1/src/model/future_l1.py``). Export
 # ``FUTURE_L1_LATENT_SIZE=<n>`` to pin a hard cap for ablation.
 if [[ -n "${FUTURE_L1_LATENT_SIZE:-}" ]]; then
   export LATENT_SIZE="${FUTURE_L1_LATENT_SIZE}"

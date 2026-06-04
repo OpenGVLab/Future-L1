@@ -33,10 +33,10 @@ sys.path.insert(0, str(REPO_ROOT))
 from lmms_eval.tasks.twiffbench.utils import _to_pil  # noqa: E402
 
 DEFAULT_PARQUET = [
-    "/path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00000-of-00004.parquet",
-    "/path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00001-of-00004.parquet",
-    "/path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00002-of-00004.parquet",
-    "/path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00003-of-00004.parquet",
+    "/path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00000-of-00004.parquet",
+    "/path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00001-of-00004.parquet",
+    "/path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00002-of-00004.parquet",
+    "/path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00003-of-00004.parquet",
 ]
 
 

@@ -15,7 +15,11 @@ export AV_LOG_LEVEL=quiet
 
 unset http_proxy; unset https_proxy; unset HTTP_PROXY; unset HTTPS_PROXY
 
-
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Future-L1 repo root (override before running if the clone path differs).
+FUTURE_L1_ROOT="${FUTURE_L1_ROOT:-${VIDEO_L1_ROOT:-$(cd "${SCRIPT_DIR}/.." && pwd)}}"
+export FUTURE_L1_ROOT VIDEO_L1_ROOT="${FUTURE_L1_ROOT}" FUTURE_L1_CODE_ROOT="${FUTURE_L1_ROOT}"
+cd "${FUTURE_L1_ROOT}"
 
 
 NPROC_PER_NODE=8
@@ -63,14 +67,14 @@ VIDEO_MAX_TOKEN=128
 
 RUN_NAME="TwiFF-interleave-top50K-lambda$LATENT_LAMBDA-max$MAX_LATENT_TOKEN"
 # RUN_NAME="DEBUG"
-OUTPUT_DIR="/path/to/your/data/VideoL1/$RUN_NAME"
-LOG_DIR="${VIDEO_L1_ROOT}/logs"
+OUTPUT_DIR="/path/to/your/outputs/Future-L1/$RUN_NAME"
+LOG_DIR="${FUTURE_L1_ROOT}/logs"
 TIMESTAMP=$(date "+%Y%m%d-%H%M%S")
 
-export PYTHONPATH=$(pwd)
+export PYTHONPATH="${FUTURE_L1_ROOT}"
 # W&B offline mode, log directory aligned with model output_dir
 export TOKENIZERS_PARALLELISM=false
-export WANDB_PROJECT=VideoL1
+export WANDB_PROJECT=Future-L1
 export WANDB_MODE=offline
 export WANDB_DIR="$OUTPUT_DIR"
 mkdir -p "$LOG_DIR"

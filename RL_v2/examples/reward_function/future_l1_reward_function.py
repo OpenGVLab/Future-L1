@@ -1,6 +1,6 @@
 r"""FutureL1 RL reward function (RL_v2 port).
 
-Based on ``VideoL1/RL/future_l1_rl/examples/reward_function/future_l1_reward_function.py``
+Based on ``Future-L1/RL_v2/examples/reward_function/future_l1_reward_function.py``
 with **format rules tightened**: RL_v2 accepts L-first ``(L R)+ A`` and R-first
 ``R (L R)+ A`` (requiring at least one latent), switches to R-first only when
 the initial checkpoint path contains ``rfirst``, and uses a ``<reason>``
@@ -281,7 +281,7 @@ def _length_penalty_for(response_length: int, ref_response_length: Optional[int]
 # ``<|im_end|>`` (or ``<|endoftext|>``) string at the end of the response,
 # which breaks the format regex's ``$`` anchor. Strip them up-front so the
 # downstream regex / answer extraction sees only the model's payload.
-# This mirrors VideoL1/RL/future_l1_rl/verl/workers/reward/function.py:
+# This mirrors Future-L1/RL_v2/verl/workers/reward/function.py:
 # normalize_reward_response_text.
 _TRAILING_SPECIALS = (
     "<|im_end|>",

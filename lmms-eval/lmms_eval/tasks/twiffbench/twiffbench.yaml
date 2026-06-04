@@ -1,7 +1,7 @@
 # TwiFF-Bench (Think With Future Frames) — adapted for Qwen-VL series.
 #
 # Dataset is the parquet release at
-#   /path/to/your/data/VideoL1-Bench/TwiFF-Bench
+#   /path/to/your/data/Future-L1-Bench/TwiFF-Bench
 # which embeds question_images / reasoning_images as raw PNG bytes
 # (HF Image feature). The original BAGEL pipeline reads frames from the
 # matching mp4 clip; per the upstream README this is interchangeable with
@@ -23,10 +23,10 @@ dataset_path: parquet
 dataset_kwargs:
   data_files:
     test:
-      - /path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00000-of-00004.parquet
-      - /path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00001-of-00004.parquet
-      - /path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00002-of-00004.parquet
-      - /path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00003-of-00004.parquet
+      - /path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00000-of-00004.parquet
+      - /path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00001-of-00004.parquet
+      - /path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00002-of-00004.parquet
+      - /path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00003-of-00004.parquet
 
 task: twiffbench
 test_split: test

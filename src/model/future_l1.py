@@ -534,10 +534,3 @@ else:
         @classmethod
         def from_pretrained(cls, *args, **kwargs):
             raise ImportError(_QWEN3_5_IMPORT_HELP)
-
-
-# Backward-compatible aliases for legacy checkpoints and imports.
-SwimBird_Qwen2_5_VL = FutureL1_Qwen2_5_VL
-SwimBird_Qwen3VL = FutureL1_Qwen3VL
-SwimBird_Qwen3_5_VL = FutureL1_Qwen3_5_VL
-_swimbird_sample = _future_l1_sample

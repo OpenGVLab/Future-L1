@@ -1,4 +1,4 @@
-dataset_path: /path/to/your/data/VideoL1-Bench/FutureBench
+dataset_path: /path/to/your/data/Future-L1-Bench/FutureBench
 dataset_kwargs:
   load_from_disk: True
   cache_dir: /path/to/your/data/V1-33K/first_part_video/
@@ -39,36 +39,6 @@ metric_list:
   - metric: hop5_acc
     aggregation: !function utils.future_pred_aggregate_hop5
     higher_is_better: true
-  - metric: latent_adjacent_cos2
-    aggregation: !function utils.future_pred_aggregate_latent_adjacent_cos2
-    higher_is_better: false
-  - metric: latent_adjacent_cos
-    aggregation: !function utils.future_pred_aggregate_latent_adjacent_cos
-    higher_is_better: false
-  - metric: latent_adjacent_mse
-    aggregation: !function utils.future_pred_aggregate_latent_adjacent_mse
-    higher_is_better: false
-  - metric: latent_adjacent_pair_count
-    aggregation: !function utils.future_pred_aggregate_latent_adjacent_pair_count
-    higher_is_better: false
-  - metric: latent_block_cos2
-    aggregation: !function utils.future_pred_aggregate_latent_block_cos2
-    higher_is_better: false
-  - metric: latent_block_cos
-    aggregation: !function utils.future_pred_aggregate_latent_block_cos
-    higher_is_better: false
-  - metric: latent_block_mse
-    aggregation: !function utils.future_pred_aggregate_latent_block_mse
-    higher_is_better: false
-  - metric: latent_block_pair_count
-    aggregation: !function utils.future_pred_aggregate_latent_block_pair_count
-    higher_is_better: false
-  - metric: latent_block_count
-    aggregation: !function utils.future_pred_aggregate_latent_block_count
-    higher_is_better: false
-  - metric: latent_vector_count
-    aggregation: !function utils.future_pred_aggregate_latent_vector_count
-    higher_is_better: false
 
 metadata:
   - version: 0.0

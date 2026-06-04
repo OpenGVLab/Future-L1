@@ -50,10 +50,10 @@ from lmms_eval.tasks.twiffbench.utils import (  # noqa: E402
 
 # Default parquet shards (same as twiffbench[_future_l1].yaml). Override with --parquet.
 DEFAULT_PARQUET = [
-    "/path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00000-of-00004.parquet",
-    "/path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00001-of-00004.parquet",
-    "/path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00002-of-00004.parquet",
-    "/path/to/your/data/VideoL1-Bench/TwiFF-Bench/test-00003-of-00004.parquet",
+    "/path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00000-of-00004.parquet",
+    "/path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00001-of-00004.parquet",
+    "/path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00002-of-00004.parquet",
+    "/path/to/your/data/Future-L1-Bench/TwiFF-Bench/test-00003-of-00004.parquet",
 ]
 
 

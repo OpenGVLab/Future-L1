@@ -36,7 +36,7 @@ from . import torch_functional as VF
 # ----------------------------------------------------------------------
 # FutureL1-specific helpers (system prompt + TwiFF frame loader)
 # ----------------------------------------------------------------------
-# Mirrors `VideoL1/src/constants.SYSTEM_MESSAGE`; used when the SFT package is
+# Mirrors `Future-L1/src/constants.SYSTEM_MESSAGE`; used when the SFT package is
 # not importable (e.g. FUTURE_L1_CODE_ROOT unset).
 _RL_SYSTEM_MESSAGE_FALLBACK = """You are a multimodal reasoning assistant capable of thinking in textual and visual modes.
 
@@ -93,8 +93,8 @@ def _future_l1_rl_system_prompt() -> str:
 
     Resolution order:
         1. ``FUTURE_L1_CODE_ROOT`` -> ``src.constants.SYSTEM_MESSAGE``
-        2. Inferred VideoL1 root (this file lives at ``VideoL1/RL_v2/verl/utils``)
-        3. Built-in fallback string (kept in sync with VideoL1/src/constants.py).
+        2. Inferred Future-L1 root (this file lives at ``Future-L1/RL_v2/verl/utils``)
+        3. Built-in fallback string (kept in sync with Future-L1/src/constants.py).
     """
     global _RL_SYSTEM_MESSAGE_CACHE
     if _truthy_env("RL_PLAIN_QWEN3VL"):
@@ -154,7 +154,7 @@ def _get_frame_indices_uni(num_frames: int, vlen: int, start_frames: int = 1, en
 def read_twiff_frames_by_clip(video_path: str, clip_indices: List[int]) -> List[ImageObject]:
     """Read TwiFF 1-based frame indices from the fixed 8-frame uniform pool.
 
-    Matches ``VideoL1/RL/future_l1_rl/verl/utils/dataset.py:read_twiff_frames_by_clip``
+    Matches ``Future-L1/RL_v2/verl/utils/dataset.py:read_twiff_frames_by_clip``
     so RL_v2 can train on the same TwiFF JSON shards without re-encoding.
     """
     if not clip_indices:

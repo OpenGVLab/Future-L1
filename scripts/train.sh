@@ -1,6 +1,11 @@
 #!/bin/bash
 
 # We use W&B in offline mode and store logs under OUTPUT_DIR.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+FUTURE_L1_ROOT="${FUTURE_L1_ROOT:-${VIDEO_L1_ROOT:-$(cd "${SCRIPT_DIR}/.." && pwd)}}"
+export FUTURE_L1_ROOT VIDEO_L1_ROOT="${FUTURE_L1_ROOT}" FUTURE_L1_CODE_ROOT="${FUTURE_L1_ROOT}"
+cd "${FUTURE_L1_ROOT}"
+
 # export NCCL_DEBUG=INFO
 # export NCCL_DEBUG_SUBSYS=ALL
 # export TORCH_DISTRIBUTED_DEBUG=DETAIL
@@ -48,13 +53,13 @@ MAX_TOKEN=16384
 MIN_TOKEN=2
 
 RUN_NAME="test"
-OUTPUT_DIR="/path/to/your/data/VideoL1/$RUN_NAME"
-LOG_DIR="${VIDEO_L1_ROOT}/logs"
+OUTPUT_DIR="/path/to/your/outputs/Future-L1/$RUN_NAME"
+LOG_DIR="${FUTURE_L1_ROOT}/logs"
 TIMESTAMP=$(date "+%Y%m%d-%H%M%S")
 
-export PYTHONPATH=$(pwd)
+export PYTHONPATH="${FUTURE_L1_ROOT}"
 # W&B offline mode, log directory aligned with model output_dir
-export WANDB_PROJECT=VideoL1
+export WANDB_PROJECT=Future-L1
 export WANDB_MODE=offline
 export WANDB_DIR="$OUTPUT_DIR"
 mkdir -p "$LOG_DIR"

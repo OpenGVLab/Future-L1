@@ -20,6 +20,8 @@ import os
 from typing import Dict
 
 _LEGACY_ENV_ALIASES = {
+    "VIDEO_L1_ROOT": "FUTURE_L1_CODE_ROOT",
+    "ROT_CODE_ROOT": "FUTURE_L1_CODE_ROOT",
     "SWIMBIRD_CODE_ROOT": "FUTURE_L1_CODE_ROOT",
     "SWIMBIRD_RL_V2_ROOT": "FUTURE_L1_RL_V2_ROOT",
     "SWIMBIRD_RL_PATCH": "FUTURE_L1_RL_PATCH",
@@ -51,6 +53,7 @@ _LEGACY_ENV_ALIASES = {
 }
 
 _FUTURE_L1_RAY_ENV_KEYS = (
+    "FUTURE_L1_ROOT",
     "FUTURE_L1_CODE_ROOT",
     "FUTURE_L1_RL_V2_ROOT",
     "FUTURE_L1_RL_PATCH",
@@ -91,10 +94,15 @@ _FUTURE_L1_RAY_ENV_KEYS = (
 
 
 def normalize_legacy_env() -> None:
-    """Map legacy SWIMBIRD_* exports to FUTURE_L1_* when the new key is unset."""
+    """Map legacy env exports to FUTURE_L1_* when the new key is unset."""
     for legacy, new in _LEGACY_ENV_ALIASES.items():
         if not os.environ.get(new) and os.environ.get(legacy):
             os.environ[new] = os.environ[legacy]
+    if not os.environ.get("FUTURE_L1_ROOT"):
+        for src in ("FUTURE_L1_CODE_ROOT", "VIDEO_L1_ROOT"):
+            if os.environ.get(src):
+                os.environ["FUTURE_L1_ROOT"] = os.environ[src]
+                break
 
 
 def collect_future_l1_ray_env_vars() -> Dict[str, str]:

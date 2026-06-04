@@ -1,7 +1,7 @@
-dataset_path: /path/to/your/data/VideoL1-Bench/SEED-Bench-R1/SEED-Bench-R1-L3
+dataset_path: /path/to/your/data/Future-L1-Bench/SEED-Bench-R1/SEED-Bench-R1-L3
 dataset_kwargs:
   load_from_disk: True
-  cache_dir: /path/to/your/data/VideoL1-Bench/SEED-Bench-R1/videos
+  cache_dir: /path/to/your/data/Future-L1-Bench/SEED-Bench-R1/videos
   # video: True
   # From_YouTube: True
 task: seedbench_r1_l3
