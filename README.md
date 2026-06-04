@@ -2,11 +2,14 @@
 <h3 align="center">Interleaved Latent Visual Reasoning for Video Event Prediction</h3>
 
 <p align="center">
+  <a href="#"><img src="https://img.shields.io/badge/arXiv-TBD-b31b1b" alt="arXiv"/></a>
+</p>
+
+<p align="center">
   <a href="#highlights"><b>Highlights</b></a> •
   <a href="#getting-started"><b>Getting Started</b></a> •
-  <a href="#acknowledgements"><b>Acknowledgements</b></a> •
-  <a href="#previous-work"><b>Previous Work</b></a> •
   <a href="#results"><b>Results</b></a> •
+  <a href="#acknowledgements"><b>Acknowledgements</b></a> •
   <a href="#citation"><b>Citation</b></a>
 </p>
 
@@ -21,7 +24,7 @@
 
 ---
 
-## Highlights
+## ✨ Highlights
 
 - **Interleaved latent visual reasoning.** Future-L1 alternates between `<reason>` text and bounded `<|latent_start|>…<|latent_end|>` spans during autoregressive decoding, keeping dynamic visual structure in a continuous channel instead of verbalizing every intermediate hypothesis.
 - **Future-L1-50K.** We curate 50K high-utility examples from TwiFF-style trajectories by **visual-gain selection**: retain samples where intermediate future visual hints measurably improve prediction over a text-only baseline.
@@ -36,7 +39,7 @@
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ```bash
 # Install
@@ -66,44 +69,7 @@ Set `MODEL_PATH`, `DATA_PATH`, `TRAIN_FILES`, and `OUTPUT_DIR` in the launch scr
 
 ---
 
-## Data Format
-
-SFT examples are JSON objects with multimodal conversations and optional future reasoning images:
-
-```json
-{
-  "conversations": [
-    {"from": "human", "value": "Question ... <video>"},
-    {"from": "gpt", "value": "<reason> ... </reason> <|latent_start|> ... <|latent_end|> ... <answer> ... </answer>"}
-  ],
-  "video": ["path/to/video.mp4"],
-  "reasoning_image": ["path/to/future_reasoning_frame.png"],
-  "answer": "final answer"
-}
-```
-
-Relative media paths are resolved against the JSON file location.
-
----
-
-## Acknowledgements
-
-We gratefully acknowledge the contributions of the open-source community, particularly:
-
-- [Qwen-VL-Series-Finetune](https://github.com/2U1/Qwen-VL-Series-Finetune)
-- [Latent Visual Reasoning (LVR)](https://github.com/VincentLeebang/lvr)
-- [SwimBird](https://github.com/Accio-Lab/SwimBird)
-- [EasyR1](https://github.com/hiyouga/easyr1)
-
----
-
-## Previous Work
-
-- [LaViT](https://github.com/Svardfox/LaViT) — Aligning latent visual thoughts for multi-modal reasoning via teacher-extracted visual thought trajectories.
-
----
-
-## Results
+## 📊 Results
 
 | | FutureBench (Acc.) | TwiFF-Bench (Avg.) |
 |---|---:|---:|
@@ -116,7 +82,19 @@ We gratefully acknowledge the contributions of the open-source community, partic
 
 ---
 
-## Citation
+## 🙏 Acknowledgements
+
+We gratefully acknowledge the contributions of the open-source community, particularly:
+
+- [Qwen-VL-Series-Finetune](https://github.com/2U1/Qwen-VL-Series-Finetune)
+- [Latent Visual Reasoning (LVR)](https://github.com/VincentLeebang/lvr)
+- [SwimBird](https://github.com/Accio-Lab/SwimBird)
+- [EasyR1](https://github.com/hiyouga/easyr1)
+- [LaViT](https://github.com/Svardfox/LaViT) — Aligning latent visual thoughts for multi-modal reasoning via teacher-extracted visual thought trajectories.
+
+---
+
+## 📖 Citation
 
 ```bibtex
 @article{tbd,
