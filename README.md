@@ -132,13 +132,11 @@ bash scripts/train_twiff.sh
 # RL — set checkpoint, data, and LLM-as-judge API (OpenAI-compatible, e.g. Qwen3.6-27B)
 cd RL_v2
 MODEL_PATH=/path/to/Future-L1-SFT \
-TRAIN_FILES=/path/to/RL_20K.json \
+TRAIN_FILES=/path/to/RL.json \
 JUDGE_API_URL=http://localhost:8000/v1 \
 JUDGE_API_NAME=your-judge-model \
 JUDGE_API_KEY=your-api-key \
-FUTURE_L1_LATENT_CTR_LAMBDA=0.2 \
-FUTURE_L1_LATENT_DIV_LAMBDA=0.1 \
-bash train.sh dapo
+bash train.sh method
 
 # Evaluation — edit model_path in the eval scripts; TwiFF-Bench also needs lmms-eval/.env
 cd lmms-eval
@@ -147,7 +145,7 @@ bash examples/eval_futurebench_future_l1.sh
 bash examples/eval_twiffbench_future_l1.sh
 ```
 
-Before running, configure paths and services in the launch scripts / environment:
+<!-- Before running, configure paths and services in the launch scripts / environment:
 
 | Stage | Required | Notes |
 |---|---|---|
@@ -155,7 +153,7 @@ Before running, configure paths and services in the launch scripts / environment
 | **RL** | `MODEL_PATH`, `TRAIN_FILES` | `MODEL_PATH` = **Future-L1-SFT** checkpoint (not the raw base model) |
 | **RL judge** | `JUDGE_API_URL`, `JUDGE_API_NAME`, `JUDGE_API_KEY` | OpenAI-compatible endpoint for accuracy reward (`USE_LLM_JUDGE=1` by default) |
 | **RL (LA-DAPO)** | `FUTURE_L1_LATENT_CTR_LAMBDA`, `FUTURE_L1_LATENT_DIV_LAMBDA` | Paper defaults: `0.2` / `0.1` |
-| **Eval** | `model_path` in eval scripts | FutureBench is rule-based; TwiFF-Bench reads `OPENAI_API_KEY`, `OPENAI_API_BASE`, `LOCAL_LLM` from `lmms-eval/.env` |
+| **Eval** | `model_path` in eval scripts | FutureBench is rule-based; TwiFF-Bench reads `OPENAI_API_KEY`, `OPENAI_API_BASE`, `LOCAL_LLM` from `lmms-eval/.env` | -->
 
 ---
 
