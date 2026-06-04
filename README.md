@@ -50,51 +50,63 @@
 </table>
 </p>
 
-**Table 1. Main results on FutureBench.** Accuracy (%); best results are in **bold**.
-
-| Model | Method | 1-Hop | 2-Hop | 3-Hop | Interp. | AVG |
-|---|---|---:|---:|---:|---:|---:|
-| GPT-4o | Zero-Shot | 61.9 | 61.7 | 72.1 | 51.6 | 59.0 |
-| GPT-5 | Zero-Shot | 59.6 | 57.3 | 62.6 | 55.6 | 57.9 |
-| Video-R1 | SFT+RL | 67.6 | 65.3 | 61.2 | 61.8 | 63.3 |
-| VideoAuto-R1 | SFT+RL | 63.6 | 69.4 | 67.7 | 59.3 | 63.4 |
-| Video-o3 | SFT+RL | 68.2 | 73.6 | 63.2 | 69.7 | 68.9 |
-| NEP | SFT+RL | 66.2 | 69.9 | 63.7 | 68.1 | 67.3 |
-| Video-CoE | SFT+RL | 80.9 | 83.9 | 71.6 | 71.4 | 75.0 |
-| Monet | SFT+RL | 46.8 | 47.2 | 45.3 | 49.7 | 47.9 |
-| SwimBird | SFT | 59.0 | 66.8 | 64.7 | 61.8 | 62.8 |
-| Qwen3-VL-Instruct | Zero-Shot | 64.2 | 65.8 | 66.2 | 55.8 | 61.0 |
-| **Future-L1-SFT** | SFT | 70.5 | 73.1 | 77.6 | 72.2 | **73.2** |
-| **Future-L1-RL** | SFT+RL | **83.2** | **86.5** | **86.6** | **85.1** | **85.4** |
+<p align="center">
+<table align="center" width="72%">
+<caption align="center"><b>Table 1. Main results on FutureBench.</b> Accuracy (%); best results are in <b>bold</b>.</caption>
+<thead>
+<tr>
+<th align="left">Model</th><th align="left">Method</th>
+<th align="right">1-Hop</th><th align="right">2-Hop</th><th align="right">3-Hop</th><th align="right">Interp.</th><th align="right">AVG</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>GPT-5</td><td>Zero-Shot</td><td align="right">59.6</td><td align="right">57.3</td><td align="right">62.6</td><td align="right">55.6</td><td align="right">57.9</td></tr>
+<tr><td>Video-R1</td><td>SFT+RL</td><td align="right">67.6</td><td align="right">65.3</td><td align="right">61.2</td><td align="right">61.8</td><td align="right">63.3</td></tr>
+<tr><td>VideoAuto-R1</td><td>SFT+RL</td><td align="right">63.6</td><td align="right">69.4</td><td align="right">67.7</td><td align="right">59.3</td><td align="right">63.4</td></tr>
+<tr><td>Video-o3</td><td>SFT+RL</td><td align="right">68.2</td><td align="right">73.6</td><td align="right">63.2</td><td align="right">69.7</td><td align="right">68.9</td></tr>
+<tr><td>NEP</td><td>SFT+RL</td><td align="right">66.2</td><td align="right">69.9</td><td align="right">63.7</td><td align="right">68.1</td><td align="right">67.3</td></tr>
+<tr><td>Video-CoE</td><td>SFT+RL</td><td align="right">80.9</td><td align="right">83.9</td><td align="right">71.6</td><td align="right">71.4</td><td align="right">75.0</td></tr>
+<tr><td>Monet</td><td>SFT+RL</td><td align="right">46.8</td><td align="right">47.2</td><td align="right">45.3</td><td align="right">49.7</td><td align="right">47.9</td></tr>
+<tr><td>SwimBird</td><td>SFT</td><td align="right">59.0</td><td align="right">66.8</td><td align="right">64.7</td><td align="right">61.8</td><td align="right">62.8</td></tr>
+<tr><td>Qwen3-VL-Instruct</td><td>Zero-Shot</td><td align="right">64.2</td><td align="right">65.8</td><td align="right">66.2</td><td align="right">55.8</td><td align="right">61.0</td></tr>
+<tr><td><b>Future-L1-SFT</b></td><td>SFT</td><td align="right">70.5</td><td align="right">73.1</td><td align="right">77.6</td><td align="right">72.2</td><td align="right"><b>73.2</b></td></tr>
+<tr><td><b>Future-L1-RL</b></td><td>SFT+RL</td><td align="right"><b>83.2</b></td><td align="right"><b>86.5</b></td><td align="right"><b>86.6</b></td><td align="right"><b>85.1</b></td><td align="right"><b>85.4</b></td></tr>
+</tbody>
+</table>
+</p>
 
 <p align="center">
-<table>
+<table align="center" width="82%">
 <tr>
-<td valign="top" width="52%">
-
-**Table 2. Main results on TwiFF-Bench.** Avg. = (CoT + Ans) / 2; best results are in **bold**.
-
-| Model | CoT | Answer | Avg. |
-|---|---:|---:|---:|
-| Bagel | 2.29 | 1.85 | 2.07 |
-| TwiFF-2.7M | 2.95 | 2.62 | 2.79 |
-| Zero-Shot | 2.75 | 2.14 | 2.44 |
-| **Future-L1-SFT** | 2.62 | 2.42 | 2.52 |
-| **Future-L1-RL** | **3.11** | **2.97** | **3.04** |
-
+<td valign="top" width="52%" align="center">
+<table align="center" width="95%">
+<caption align="center"><b>Table 2. Main results on TwiFF-Bench.</b> Avg. = (CoT + Ans) / 2; best results are in <b>bold</b>.</caption>
+<thead>
+<tr><th align="left">Model</th><th align="right">CoT</th><th align="right">Answer</th><th align="right">Avg.</th></tr>
+</thead>
+<tbody>
+<tr><td>Bagel</td><td align="right">2.29</td><td align="right">1.85</td><td align="right">2.07</td></tr>
+<tr><td>TwiFF-2.7M</td><td align="right">2.95</td><td align="right">2.62</td><td align="right">2.79</td></tr>
+<tr><td>Zero-Shot</td><td align="right">2.75</td><td align="right">2.14</td><td align="right">2.44</td></tr>
+<tr><td><b>Future-L1-SFT</b></td><td align="right">2.62</td><td align="right">2.42</td><td align="right">2.52</td></tr>
+<tr><td><b>Future-L1-RL</b></td><td align="right"><b>3.11</b></td><td align="right"><b>2.97</b></td><td align="right"><b>3.04</b></td></tr>
+</tbody>
+</table>
 </td>
-<td valign="top" width="48%">
-
-**Table 7. Inference cost on FutureBench.** Average tokens, accuracy, latency, and accuracy per second.
-
-| Model | Tokens ↓ | Acc. ↑ | Latency (s) ↓ | Acc./s ↑ |
-|---|---:|---:|---:|---:|
-| Video-R1 | 398.5 | 63.3 | 3.28 | 19.3 |
-| Video-o3 | 348.6 | 68.9 | 25.90 | 2.7 |
-| Qwen3-VL-8B | 288.8 | 61.0 | 1.18 | 51.7 |
-| **Future-L1-SFT** | 205.3 | 73.1 | 0.96 | 76.1 |
-| **Future-L1-RL** | **195.3** | **85.4** | **0.91** | **93.8** |
-
+<td valign="top" width="48%" align="center">
+<table align="center" width="95%">
+<caption align="center"><b>Table 7. Inference cost on FutureBench.</b> Average tokens, accuracy, latency, and accuracy per second.</caption>
+<thead>
+<tr><th align="left">Model</th><th align="right">Tokens ↓</th><th align="right">Acc. ↑</th><th align="right">Latency (s) ↓</th><th align="right">Acc./s ↑</th></tr>
+</thead>
+<tbody>
+<tr><td>Video-R1</td><td align="right">398.5</td><td align="right">63.3</td><td align="right">3.28</td><td align="right">19.3</td></tr>
+<tr><td>Video-o3</td><td align="right">348.6</td><td align="right">68.9</td><td align="right">25.90</td><td align="right">2.7</td></tr>
+<tr><td>Qwen3-VL-8B</td><td align="right">288.8</td><td align="right">61.0</td><td align="right">1.18</td><td align="right">51.7</td></tr>
+<tr><td><b>Future-L1-SFT</b></td><td align="right">205.3</td><td align="right">73.1</td><td align="right">0.96</td><td align="right">76.1</td></tr>
+<tr><td><b>Future-L1-RL</b></td><td align="right"><b>195.3</b></td><td align="right"><b>85.4</b></td><td align="right"><b>0.91</b></td><td align="right"><b>93.8</b></td></tr>
+</tbody>
+</table>
 </td>
 </tr>
 </table>
