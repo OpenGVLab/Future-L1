@@ -4,9 +4,8 @@
 <p align="center">
   <a href="#highlights"><b>Highlights</b></a> •
   <a href="#getting-started"><b>Getting Started</b></a> •
-  <a href="#results"><b>Results</b></a> •
   <a href="#acknowledgements"><b>Acknowledgements</b></a> •
-  <a href="#citation"><b>Citation</b></a>
+  <a href="#citation"><b>Citation</b></a> •
   <a href="#"><img src="https://img.shields.io/badge/arXiv-TBD-b31b1b" alt="arXiv"/></a>
 </p>
 
@@ -33,6 +32,26 @@
   <img src="asset/figure2.png" width="96%" alt="Future-L1 pipeline"/>
 </p>
 <p align="center"><em><b>Figure 2.</b> (Left) Future-L1-50K is built by ranking TwiFF candidates by visual gain <i>p<sub>v</sub> − p<sub>t</sub></i>. (Center) SFT trains interleaved text–latent trajectories, aligning latent spans with future visual states. (Right) LA-DAPO further optimizes sampled trajectories with outcome-contrastive and temporal-diversity rewards.</em></p>
+
+<p align="center">
+  <img src="asset/futurebench_latent_span_donut.png" width="88%" alt="Latent-span usage by reasoning depth"/>
+</p>
+<p align="center"><em><b>Figure 4.</b> Latent-span usage by reasoning depth. Donuts show span-count distributions; values report mean spans over six RL settings.</em></p>
+
+<p align="center">
+  <img src="asset/data_volume_combined.png" width="88%" alt="RL data scaling on TwiFF-Bench"/>
+</p>
+<p align="center"><em><b>Figure 5.</b> RL data scaling on TwiFF-Bench. Scores improve as LA-DAPO uses 5K, 10K, and 20K retained visual-gain samples.</em></p>
+
+**Table 7. Inference cost on FutureBench.** Average tokens, accuracy, latency, and accuracy per second.
+
+| Model | Tokens ↓ | Acc. ↑ | Latency (s) ↓ | Acc./s ↑ |
+|---|---:|---:|---:|---:|
+| Video-R1 | 398.5 | 63.3 | 3.28 | 19.3 |
+| Video-o3 | 348.6 | 68.9 | 25.90 | 2.7 |
+| Qwen3-VL-8B | 288.8 | 61.0 | 1.18 | 51.7 |
+| **Future-L1-SFT** | 205.3 | 73.1 | 0.96 | 76.1 |
+| **Future-L1-RL** | **195.3** | **85.4** | **0.91** | **93.8** |
 
 ---
 
@@ -66,18 +85,6 @@ bash examples/eval_twiffbench_future_l1.sh
 ```
 
 Set `MODEL_PATH`, `DATA_PATH`, `TRAIN_FILES`, and `OUTPUT_DIR` in the launch scripts before running.
-
----
-
-## 📊 Results
-
-| | FutureBench (Acc.) | TwiFF-Bench (Avg.) |
-|---|---:|---:|
-| Qwen3-VL-8B (zero-shot) | 61.0 | 2.44 |
-| **Future-L1-SFT** | **73.2** | 2.52 |
-| **Future-L1-RL (LA-DAPO)** | **85.4** | **3.04** |
-
-> **+24.4** points on FutureBench over the Qwen3-VL-8B backbone · **+10.4** over the previous best Video-CoE · **+0.60** average score on TwiFF-Bench
 
 ---
 
