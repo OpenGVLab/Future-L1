@@ -2,10 +2,7 @@
 <h3 align="center">Interleaved Latent Visual Reasoning for Video Event Prediction</h3>
 
 <p align="center">
-  <a href="https://www.alphaxiv.org/abs/2606.05769"><b>💬 Chat the Paper</b></a>
-</p>
-
-<p align="center">
+  <a href="https://www.alphaxiv.org/abs/2606.05769"><b>💬 Chat the Paper</b></a> •
   <a href="#highlights"><b>Highlights</b></a> •
   <a href="#getting-started"><b>Getting Started</b></a> •
   <a href="#acknowledgements"><b>Acknowledgements</b></a> •
