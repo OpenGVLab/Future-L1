@@ -1,8 +1,7 @@
-<h1 align="center">💭 Imagine Before You Predict</h1>
+<h1 align="center">💭 Imagine Before You Predict <a href="https://www.alphaxiv.org/abs/2606.05769">💬 Chat</a></h1>
 <h3 align="center">Interleaved Latent Visual Reasoning for Video Event Prediction</h3>
 
 <p align="center">
-  <a href="https://www.alphaxiv.org/abs/2606.05769"><b>💬 Chat the Paper</b></a> •
   <a href="#highlights"><b>Highlights</b></a> •
   <a href="#getting-started"><b>Getting Started</b></a> •
   <a href="#acknowledgements"><b>Acknowledgements</b></a> •
@@ -24,7 +23,7 @@
 ## ✨ Highlights
 
 - **Interleaved latent visual reasoning.** Future-L1 alternates between `<reason>` text and bounded `<|latent_start|>…<|latent_end|>` spans during autoregressive decoding, keeping dynamic visual structure in a continuous channel instead of verbalizing every intermediate hypothesis.
-- **Future-L1-50K.** We curate 50K high-utility examples from TwiFF-style trajectories by **visual-gain selection**: retain samples where intermediate future visual hints measurably improve prediction over a text-only baseline.
+- **🤗 [Future-L1-50K](https://huggingface.co/datasets/Eurayka/Future-L1-50K).** We curate 50K high-utility examples from TwiFF-style trajectories by **visual-gain selection**: retain samples where intermediate future visual hints measurably improve prediction over a text-only baseline.
 - **LA-DAPO RL.** A latent-aware extension of DAPO with **outcome-contrastive** (`R_ctr`) and **temporal-diversity** (`R_div`) rewards that optimize sampled latent trajectories without intermediate-frame annotations at RL time.
 - **State-of-the-art VEP performance.** Future-L1-RL reaches **85.4%** on FutureBench and **3.04** average score on TwiFF-Bench, with especially strong gains on multi-hop and non-consecutive future-event splits.
 - **Compact inference.** Accuracy improves through latent visual computation rather than long text-only chains or multi-turn search.
@@ -170,9 +169,10 @@ We gratefully acknowledge the contributions of the open-source community, partic
 ## 📖 Citation
 
 ```bibtex
-@article{tbd,
-  title   = {TBD},
-  author  = {TBD},
-  year    = {TBD}
+@article{jiang2026imagine,
+  title={Imagine Before You Predict: Interleaved Latent Visual Reasoning for Video Event Prediction},
+  author={Jiang, Tianxiang and Wu, Linquan and Xia, Sheng and Li, Songze and Yan, Ziang and Yang, Haoyu and Qiao, Yu and Wang, Yi},
+  journal={arXiv preprint arXiv:2606.05769},
+  year={2026}
 }
 ```
