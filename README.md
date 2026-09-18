@@ -4,7 +4,7 @@ Interleaved Latent Visual Reasoning for Video Event Prediction
 </h1><!-- <h3 align="center"></h3> -->
 
 <div align="center">
-  <strong> 🎉 Accepted to EMNLP 2026 as Main Conference</strong>
+  <strong> 🎉 Accepted to EMNLP 2026 Main Conference</strong>
 </div>
 
 <br>
