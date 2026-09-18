@@ -1,13 +1,29 @@
-<h1 align="center">💭 Imagine Before You Predict <a href="https://www.alphaxiv.org/abs/2606.05769">💬 Chat</a></h1>
-<h3 align="center">Interleaved Latent Visual Reasoning for Video Event Prediction</h3>
+<h1 align="center">
+💭 Imagine Before You Predict:<br>
+Interleaved Latent Visual Reasoning for Video Event Prediction
+</h1><!-- <h3 align="center"></h3> -->
 
-<p align="center">
-  <a href="#highlights"><b>Highlights</b></a> •
-  <a href="#getting-started"><b>Getting Started</b></a> •
-  <a href="#acknowledgements"><b>Acknowledgements</b></a> •
-  <a href="#citation"><b>Citation</b></a>
-  <!-- <a href="#"><img src="https://img.shields.io/badge/arXiv-TBD-b31b1b" alt="arXiv"/></a> -->
-</p>
+<div align="center">
+  <strong> 🎉 Accepted to EMNLP 2026 as Main Conference</strong>
+</div>
+
+<br>
+
+<div align="center">
+    <a href="https://arxiv.org/abs/2606.05769">📄 <b>Paper</b></a> •
+    <a href="https://www.alphaxiv.org/abs/2606.05769">💬 <b>Quick Chat</b></a> •
+    <a href="https://huggingface.co/datasets/Eurayka/Future-L1-50K">🤗 <b>Dataset</b></a> 
+</div>
+
+
+<div align="center">
+    <a href="#highlights">✨ <b>Highlights</b></a> •
+    <a href="#getting-started">🚀 <b>Getting Started</b></a> •
+    <a href="#citation">📖 <b>Citation</b></a> •
+    <a href="#acknowledgements">🙏 <b>Acknowledgements</b></a> 
+</div>
+
+<br>
 
 <p align="center">
   <b>Future-L1</b> teaches multimodal LLMs to alternate between language tokens and continuous latent visual spans, enabling compact future-state imagination before answering video event prediction questions.
@@ -20,7 +36,7 @@
 
 ---
 
-## ✨ Highlights
+<h2 id="highlights">✨ Highlights</h2>
 
 - **Interleaved latent visual reasoning.** Future-L1 alternates between `<reason>` text and bounded `<|latent_start|>…<|latent_end|>` spans during autoregressive decoding, keeping dynamic visual structure in a continuous channel instead of verbalizing every intermediate hypothesis.
 - **🤗 [Future-L1-50K](https://huggingface.co/datasets/Eurayka/Future-L1-50K).** We curate 50K high-utility examples from TwiFF-style trajectories by **visual-gain selection**: retain samples where intermediate future visual hints measurably improve prediction over a text-only baseline.
@@ -114,7 +130,7 @@
 
 ---
 
-## 🚀 Getting Started
+<h2 id="getting-started">🚀 Getting Started</h2>
 
 ```bash
 # Install
@@ -157,16 +173,7 @@ bash examples/eval_twiffbench_future_l1.sh
 
 ---
 
-## 🙏 Acknowledgements
-
-We gratefully acknowledge the contributions of the open-source community, particularly:
-
-- [Qwen-VL-Series-Finetune](https://github.com/2U1/Qwen-VL-Series-Finetune), [Latent Visual Reasoning (LVR)](https://github.com/VincentLeebang/lvr), [SwimBird](https://github.com/Accio-Lab/SwimBird), [EasyR1](https://github.com/hiyouga/easyr1)
-- Previous Work: [LaViT](https://github.com/Svardfox/LaViT) — Aligning latent visual thoughts for multi-modal reasoning via teacher-extracted visual thought trajectories.
-
----
-
-## 📖 Citation
+<h2 id="citation">📖 Citation</h2>
 
 ```bibtex
 @article{jiang2026imagine,
@@ -176,3 +183,12 @@ We gratefully acknowledge the contributions of the open-source community, partic
   year={2026}
 }
 ```
+
+---
+
+<h2 id="acknowledgements">🙏 Acknowledgements</h2>
+
+We gratefully acknowledge the contributions of the open-source community, particularly:
+
+- [Qwen-VL-Series-Finetune](https://github.com/2U1/Qwen-VL-Series-Finetune), [Latent Visual Reasoning (LVR)](https://github.com/VincentLeebang/lvr), [SwimBird](https://github.com/Accio-Lab/SwimBird), [EasyR1](https://github.com/hiyouga/easyr1)
+- Previous Work: [LaViT](https://github.com/Svardfox/LaViT) — Aligning latent visual thoughts for multi-modal reasoning via teacher-extracted visual thought trajectories.
